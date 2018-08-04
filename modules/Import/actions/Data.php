@@ -408,19 +408,13 @@ class Import_Data_Action extends Vtiger_Action_Controller {
 					} else {
 						$fieldValueDetails = $fieldValue;
 					}
-					if (count($fieldValueDetails) > 1 && $fieldValueDetails[0] !== "Users") {
+					if (count($fieldValueDetails) > 1) {
 						$referenceModuleName = trim($fieldValueDetails[0]);
 						$entityLabel = trim($fieldValueDetails[1]);
 						$entityId = getEntityId($referenceModuleName, $entityLabel);
 					} else {
 						$referencedModules = $fieldInstance->getReferenceList();
-						if(strpos($fieldValue, '::::') > 0) {
-							$entityLabel = explode('::::', $fieldValue)[1];
-						} else if (strpos($fieldValue, ':::') > 0) {
-							$entityLabel = explode(':::', $fieldValue[1]);
-						} else {
-							$entityLabel = $fieldValue;
-						}
+						$entityLabel = $fieldValue;
 						foreach ($referencedModules as $referenceModule) {
 							$referenceModuleName = $referenceModule;
 							if ($referenceModule == 'Users') {
@@ -454,19 +448,17 @@ class Import_Data_Action extends Vtiger_Action_Controller {
 					}
 					$fieldData[$fieldName] = $entityId;
 				} else {
-                    if($fieldInstance->isMandatory()){
-                        $referencedModules = $fieldInstance->getReferenceList();
-                        if ($referencedModules[0] == 'Users') {
-                            if(isset($defaultFieldValues[$fieldName])) {
-                                $fieldData[$fieldName] = $defaultFieldValues[$fieldName];
-                            }
-                            if(empty($fieldData[$fieldName]) ||
-                                    !Import_Utils_Helper::hasAssignPrivilege($moduleMeta->getEntityName(), $fieldData[$fieldName])) {
-                                $fieldData[$fieldName] = $this->user->id;
-                            }
-                        } else {
-                            $fieldData[$fieldName] = '';
-                        }
+					$referencedModules = $fieldInstance->getReferenceList();
+					if ($referencedModules[0] == 'Users') {
+						if(isset($defaultFieldValues[$fieldName])) {
+							$fieldData[$fieldName] = $defaultFieldValues[$fieldName];
+						}
+						if(empty($fieldData[$fieldName]) ||
+								!Import_Utils_Helper::hasAssignPrivilege($moduleMeta->getEntityName(), $fieldData[$fieldName])) {
+							$fieldData[$fieldName] = $this->user->id;
+						}
+					} else {
+						$fieldData[$fieldName] = '';
 					}
 				}
 

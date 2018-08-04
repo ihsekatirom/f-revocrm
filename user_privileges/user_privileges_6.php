@@ -1,0 +1,9 @@
+<?php
+
+
+//This is the access privilege file
+$is_admin=true;
+
+$user_info=array('accesskey'=>'t7AKCanaFgngr2gO','activity_view'=>'This Week','address_city'=>'篠山市','address_country'=>'日本','address_postalcode'=>'669-0002','address_state'=>'兵庫県','address_street'=>'西古佐８&minus;９&minus;１０','confirm_password'=>'$1$ak000000$/alLVDsKoCE4lDPqB2duM/','currency_decimal_separator'=>'.','currency_grouping_pattern'=>'123,456,789','currency_grouping_separator'=>',','currency_id'=>'1','currency_symbol_placement'=>'$1.0','date_format'=>'yyyy-mm-dd','department'=>'販売管理部','description'=>'','email1'=>'xxxxx@yyyy.co.jp','email2'=>'','end_hour'=>'','first_name'=>'暁子','hour_format'=>'12','is_admin'=>'on','last_name'=>'森','lead_view'=>'Today','phone_fax'=>'06-3333-2223','phone_home'=>'','phone_mobile'=>'090-7777-9999','phone_other'=>'','phone_work'=>'06-3333-2222','reports_to_id'=>'','roleid'=>'H4','secondaryemail'=>'','signature'=>'北山提灯店\n販売管理部\n森　暁子','start_hour'=>'00:00','status'=>'Active','time_zone'=>'Asia/Tokyo','title'=>'係長','user_name'=>'akiko.mori','user_password'=>'$1$ak000000$/alLVDsKoCE4lDPqB2duM/','imagename'=>'','internal_mailer'=>'1','theme'=>'orchid','language'=>'ja_jp','reminder_interval'=>'','phone_crm_extension'=>'','no_of_currency_decimals'=>'0','truncate_trailing_zeros'=>'1','dayoftheweek'=>'Sunday','callduration'=>'5','othereventduration'=>'5','calendarsharedtype'=>'public','default_record_view'=>'Summary','leftpanelhide'=>'0','rowheight'=>'medium','defaulteventstatus'=>'オプションの選択','defaultactivitytype'=>'オプションの選択','hidecompletedevents'=>'1','is_owner'=>'1','currency_name'=>'Japan, Yen','currency_code'=>'JPY','currency_symbol'=>'&#165;','conv_rate'=>'1.00000','record_id'=>'','record_module'=>'','id'=>'6');
+
+?>

@@ -105,6 +105,7 @@ function getAssociatedProducts($module,$focus,$seid='')
 		$query="SELECT
 					case when vtiger_products.productid != '' then vtiger_products.productname else vtiger_service.servicename end as productname,
  		            case when vtiger_products.productid != '' then vtiger_products.product_no else vtiger_service.service_no end as productcode,
+ 		            case when vtiger_products.productid != '' then vtiger_products.productcode else 'NA' end as product_code,
 					case when vtiger_products.productid != '' then vtiger_products.unit_price else vtiger_service.unit_price end as unit_price,
  		            case when vtiger_products.productid != '' then vtiger_products.qtyinstock else 'NA' end as qtyinstock,
  		            case when vtiger_products.productid != '' then 'Products' else 'Services' end as entitytype,
@@ -180,6 +181,7 @@ function getAssociatedProducts($module,$focus,$seid='')
 		$deleted = $adb->query_result($result,$i-1,'deleted');
 		$hdnProductId = $adb->query_result($result,$i-1,'productid');
 		$hdnProductcode = $adb->query_result($result,$i-1,'productcode');
+		$Productcode = $adb->query_result($result,$i-1,'product_code');
 		$productname=$adb->query_result($result,$i-1,'productname');
 		$productdescription=$adb->query_result($result,$i-1,'product_description');
 		$comment=$adb->query_result($result,$i-1,'comment');
@@ -242,6 +244,7 @@ function getAssociatedProducts($module,$focus,$seid='')
 		if($_REQUEST['action'] == 'CreateSOPDF' || $_REQUEST['action'] == 'CreatePDF' || $_REQUEST['action'] == 'SendPDFMail')
 			$product_Detail[$i]['productName'.$i]= htmlspecialchars($product_Detail[$i]['productName'.$i]);
 		$product_Detail[$i]['hdnProductcode'.$i] = $hdnProductcode;
+		$product_Detail[$i]['Productcode'.$i] = $Productcode;
 		$product_Detail[$i]['productDescription'.$i]= from_html($productdescription);
 		if($module == 'Potentials' || $module == 'Products' || $module == 'Services') {
 			$product_Detail[$i]['comment'.$i]= $productdescription;
