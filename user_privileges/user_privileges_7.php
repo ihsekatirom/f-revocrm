@@ -1,0 +1,9 @@
+<?php
+
+
+//This is the access privilege file
+$is_admin=true;
+
+$user_info=array('accesskey'=>'ldjdKh4pRoJrJRBL','activity_view'=>'This Week','address_city'=>'篠山市','address_country'=>'日本','address_postalcode'=>'669-0002','address_state'=>'兵庫県','address_street'=>'杉８&minus;９&minus;２３','confirm_password'=>'$1$ta000000$ZEacIHVSfRnn9e.et1tI20','currency_decimal_separator'=>'.','currency_grouping_pattern'=>'123,456,789','currency_grouping_separator'=>',','currency_id'=>'1','currency_symbol_placement'=>'$1.0','date_format'=>'yyyy-mm-dd','department'=>'営業本部','description'=>'','email1'=>'tadashi@xxxxx.xx','email2'=>'t.mori@xxxxxxx.xx','end_hour'=>'','first_name'=>'正','hour_format'=>'12','is_admin'=>'on','last_name'=>'森','lead_view'=>'Last Week','phone_fax'=>'06-3333-2226','phone_home'=>'','phone_mobile'=>'070-3344-8877','phone_other'=>'','phone_work'=>'06-3333-2225','reports_to_id'=>'','roleid'=>'H2','secondaryemail'=>'','signature'=>'北山提灯店　代表\n森　正','start_hour'=>'00:00','status'=>'Active','time_zone'=>'Asia/Tokyo','title'=>'経営者','user_name'=>'tadashi.mori','user_password'=>'$1$ta000000$ZEacIHVSfRnn9e.et1tI20','imagename'=>'','internal_mailer'=>'1','theme'=>'nature','language'=>'ja_jp','reminder_interval'=>'','phone_crm_extension'=>'','no_of_currency_decimals'=>'0','truncate_trailing_zeros'=>'1','dayoftheweek'=>'Sunday','callduration'=>'5','othereventduration'=>'5','calendarsharedtype'=>'public','default_record_view'=>'Summary','leftpanelhide'=>'0','rowheight'=>'medium','defaulteventstatus'=>'オプションの選択','defaultactivitytype'=>'オプションの選択','hidecompletedevents'=>'1','is_owner'=>'1','currency_name'=>'Japan, Yen','currency_code'=>'JPY','currency_symbol'=>'&#165;','conv_rate'=>'1.00000','record_id'=>'','record_module'=>'','id'=>'7');
+
+?>

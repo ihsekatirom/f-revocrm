@@ -171,6 +171,10 @@ class Vtiger_PDF_Generator {
 		$this->pdf->Output($name, $outputMode);
 	}
 
+	function generate_withoutOutput() {
+		$this->contentViewer->display($this);
+	}
+
 	function getImageSize($file) {
 		// get image dimensions
 		$imsize = @getimagesize($file);
