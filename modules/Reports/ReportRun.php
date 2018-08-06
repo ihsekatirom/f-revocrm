@@ -383,7 +383,7 @@ class ReportRun extends CRMEntity
 
 
 	function getColumnSQL($selectedfields) {
-		global $adb, $current_user;
+		global $adb;
 		$header_label = $selectedfields[2]; // Header label to be displayed in the reports table
 
 		list($module,$field) = split("_",$selectedfields[2]);

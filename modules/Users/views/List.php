@@ -65,7 +65,7 @@ class Users_List_View extends Settings_Vtiger_List_View {
 
 		$linkParams = array('MODULE'=>$moduleName, 'ACTION'=>$request->get('view'), 'CVID'=>$cvId);
 		$linkModels = $listViewModel->getListViewMassActions($linkParams);
-        $listViewModel->set('status', $status);
+                $listViewModel->set('status', $status);
 
 		$pagingModel = new Vtiger_Paging_Model();
 		$pagingModel->set('page', $pageNumber);
@@ -165,25 +165,17 @@ class Users_List_View extends Settings_Vtiger_List_View {
 	function getListViewCount(Vtiger_Request $request){
 		$moduleName = $request->getModule();
 		$cvId = $request->get('viewname');
-
-		$listViewModel = Vtiger_ListView_Model::getInstance($moduleName, $cvId);
+		if(empty($cvId)) {
+			$cvId = '0';
+		}
 
 		$searchKey = $request->get('search_key');
 		$searchValue = $request->get('search_value');
-		$operator = $request->get('operator');
-		if(!empty($operator)) {
-			$listViewModel->set('operator', $operator);
-		}
-		if(!empty($searchKey) && !empty($searchValue)) {
-			$listViewModel->set('search_key', $searchKey);
-			$listViewModel->set('search_value', $searchValue);
-		}
 
-		$status = $request->get('status');
-        if(empty($status))
-            $status = 'Active';
-
-		$listViewModel->set('status', $status);
+		$listViewModel = Vtiger_ListView_Model::getInstance($moduleName, $cvId);
+		$listViewModel->set('search_key', $searchKey);
+		$listViewModel->set('search_value', $searchValue);
+		$listViewModel->set('operator', $request->get('operator'));
 
 		$count = $listViewModel->getListViewCount();
 

@@ -143,15 +143,14 @@ class CustomView_Record_Model extends Vtiger_Base_Model {
 	}
 
 	public function isEditable() {
-		$currentUser = Users_Record_Model::getCurrentUserModel();
-
-		if($this->get('viewname') == 'All' && $currentUser->is_admin !== "on") {
+		if($this->get('viewname') == 'All') {
 			return false;
 		}
+        $currentUser = Users_Record_Model::getCurrentUserModel();
         if($currentUser->isAdminUser()) {
             return true;
         }
-
+        
 		if($this->isMine() || $this->isOthers()) {
 			return true;
 		}
@@ -159,11 +158,7 @@ class CustomView_Record_Model extends Vtiger_Base_Model {
 	}
 
 	public function isDeletable() {
-		if($this->get('viewname') == 'All') {
-			return false;
-		} else {
-			return $this->isEditable();
-		}
+		return $this->isEditable();
 	}
 
 	/**
@@ -247,12 +242,6 @@ class CustomView_Record_Model extends Vtiger_Base_Model {
 			$db->pquery($sql, $params);
 
 		} else {
-
-			// デフォルトのフィルタのステータスはデフォルトのままから変更しない
-			$before = CustomView_Record_Model::getInstanceById($cvId);
-			if($before->get('status') == self::CV_STATUS_DEFAULT) {
-				$status = self::CV_STATUS_DEFAULT;
-			}
 
 			$sql = 'UPDATE vtiger_customview SET viewname=?, setdefault=?, setmetrics=?, status=? WHERE cvid=?';
 			$params = array($viewName, $setDefault, $setMetrics, $status, $cvId);

@@ -950,7 +950,7 @@ jQuery(document).ready(function(){
 		return String(num).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 	};
 
-	var addComma = function(elem, isFixPos) {
+	var addComma = function(elem) {
 		var self = $(elem);
 		var pos = self.get(0).selectionStart;
 		var org = self.val();
@@ -958,19 +958,17 @@ jQuery(document).ready(function(){
 
 		self.val(val);
 
-		if(isFixPos) {
-			pos = pos + val.length - org.length;
-			self.get(0).selectionStart = pos;
-			self.get(0).selectionEnd = pos;
-		}
+		pos = pos + val.length - org.length;
+		self.get(0).selectionStart = pos;
+		self.get(0).selectionEnd = pos;
 	}
 
 	$("input").filter(".price, .tax, .currencyField").on("keyup blur", function(e){
 		if( (e.keyCode >= 48 && e.keyCode <= 57)  || (e.keyCode >= 96 && e.keyCode <= 105) ) { //keyup
-			addComma(this, true);
+			addComma(this);
 		}
 		else if(!e.keyCode){ //blur
-			addComma(this, false);
+			addComma(this);
 		}
 	});
 

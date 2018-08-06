@@ -256,11 +256,13 @@ class Vtiger_InventoryPDFController {
 			$resultrow = $adb->fetch_array($result);
 
 			$addressValues = array();
-			$addressValues[] = $resultrow['address'];
-			if(!empty($resultrow['city'])) $addressValues[]= "\n".$resultrow['city'];
-			if(!empty($resultrow['state'])) $addressValues[]= ",".$resultrow['state'];
+
 			if(!empty($resultrow['code'])) $addressValues[]= $resultrow['code'];
-			if(!empty($resultrow['country'])) $addressValues[]= "\n".$resultrow['country'];
+//			if(!empty($resultrow['country'])) $addressValues[]= "\n".$resultrow['country'];
+			if(!empty($resultrow['state'])) $addressValues[]= "\n".$resultrow['state'];
+			if(!empty($resultrow['city'])) $addressValues[]= $resultrow['city'];
+			if(!empty($resultrow['address'])) $addressValues[] = $resultrow['address'];
+			
 
 			$additionalCompanyInfo = array();
 			if(!empty($resultrow['phone']))		$additionalCompanyInfo[]= "\n".getTranslatedString("Phone: ", $this->moduleName). $resultrow['phone'];
@@ -301,8 +303,8 @@ class Vtiger_InventoryPDFController {
 						$issueDateLabel  => $this->formatDate(date("Y-m-d")),
 						$validDateLabel  => $this->formatDate($this->focusColumnValue('validtill')),
 				),
-				$billingAddressLabel  => $this->buildHeaderBillingAddress(),
-				$shippingAddressLabel => $this->buildHeaderShippingAddress()
+				$billingAddressLabel  => decode_html($this->buildHeaderBillingAddress()),
+				$shippingAddressLabel => decode_html($this->buildHeaderShippingAddress())
 		);
 		return $modelColumnRight;
 	}
@@ -339,27 +341,23 @@ class Vtiger_InventoryPDFController {
 
 	function buildHeaderBillingAddress() {
 		$billPoBox	= $this->focusColumnValues(array('bill_pobox'));
-		$billStreet = $this->focusColumnValues(array('bill_street'));
+		$billCode	= $this->focusColumnValues(array('bill_code'));
+//		$billCountry	= $this->focusColumnValues(array('bill_country'));
+		$billState	= "\n".$this->focusColumnValues(array('bill_state'));
 		$billCity	= $this->focusColumnValues(array('bill_city'));
-		$billState	= $this->focusColumnValues(array('bill_state'));
-		$billCountry = $this->focusColumnValues(array('bill_country'));
-		$billCode	=  $this->focusColumnValues(array('bill_code'));
-		$address	= $this->joinValues(array($billCode, $billState), ' ');
-		$address .= "\n".$billCity;
-		$address .= "\n".$billStreet;
+		$billStreet	= $this->focusColumnValues(array('bill_street'));
+		$address	= $this->joinValues(array($billCode, $billState, $billCity, $billStreet), ' ');
 		return $address;
 	}
 
 	function buildHeaderShippingAddress() {
 		$shipPoBox	= $this->focusColumnValues(array('ship_pobox'));
-		$shipStreet = $this->focusColumnValues(array('ship_street'));
+		$shipCode	= $this->focusColumnValues(array('ship_code'));
+//		$shipCountry	= $this->focusColumnValues(array('ship_country'));
+		$shipState	= "\n".$this->focusColumnValues(array('ship_state'));
 		$shipCity	= $this->focusColumnValues(array('ship_city'));
-		$shipState	= $this->focusColumnValues(array('ship_state'));
-		$shipCountry = $this->focusColumnValues(array('ship_country'));
-		$shipCode	=  $this->focusColumnValues(array('ship_code'));
-		$address	= $this->joinValues(array($shipCode, $shipState), ' ');
-		$address .= "\n".$shipCity;
-		$address .= "\n".$shipStreet;
+		$shipStreet	= $this->focusColumnValues(array('ship_street'));
+		$address	= $this->joinValues(array($shipCode, $shipState, $shipCity, $shipStreet), ' ');
 		return $address;
 	}
 

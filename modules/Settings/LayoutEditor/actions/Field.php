@@ -40,19 +40,11 @@ class Settings_LayoutEditor_Field_Action extends Settings_Vtiger_Index_Action {
     public function save(Vtiger_Request $request) {
         $fieldId = $request->get('fieldid');
         $fieldInstance = Vtiger_Field_Model::getInstance($fieldId);
-
-        if(empty($request->get('label'))) {
-            $label = $fieldInstance->get('label');
-        } else {
-            $label = $request->get('label');
-        }
-
         $fieldInstance->updateTypeofDataFromMandatory($request->get('mandatory'))
 					  ->set('presence', $request->get('presence'))
                       ->set('quickcreate', $request->get('quickcreate'))
 					  ->set('summaryfield', $request->get('summaryfield'))
-                      ->set('masseditable', $request->get('masseditable'))
-                      ->set('label', $label);
+                      ->set('masseditable', $request->get('masseditable'));
 		$defaultValue = $request->get('fieldDefaultValue');
 		if($fieldInstance->getFieldDataType() == 'date') {
 			$dateInstance = new Vtiger_Date_UIType();
@@ -67,9 +59,7 @@ class Settings_LayoutEditor_Field_Action extends Settings_Vtiger_Index_Action {
         try{
             $fieldInstance->save();
             $response->setResult(array('success'=>true, 'presence'=>$request->get('presence'), 'mandatory'=>$fieldInstance->isMandatory(),
-									'label'=>vtranslate($fieldInstance->get('label'), $request->get('sourceModule')),
-                                    'fieldid'=>$fieldInstance->get('id'),
-                                ));
+									'label'=>vtranslate($fieldInstance->get('label'), $request->get('sourceModule'))));
         }catch(Exception $e) {
             $response->setError($e->getCode(), $e->getMessage());
         }

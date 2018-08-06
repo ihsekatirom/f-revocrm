@@ -54,9 +54,10 @@ class Users_ListView_Model extends Vtiger_ListView_Model {
     public function getQuery() {
             $listQuery = parent::getQuery();
         //remove the status active condition since in users list view we need to consider inactive users as well
-        $status = $this->get('status');
-        if(!empty($status) && $status == 'Inactive') {
-			$listQuery = preg_replace("/'Active'/", "'$status'", $listQuery);
+        $searchKey = $this->get('search_key');
+        if(!empty($searchKey)) {
+            $listQueryComponents = explode(" WHERE vtiger_users.status='Active' AND", $listQuery);
+            $listQuery = implode(' WHERE ', $listQueryComponents);
         }
         return $listQuery;
 
@@ -74,7 +75,7 @@ class Users_ListView_Model extends Vtiger_ListView_Model {
 		$fields = $queryGenerator->getFields();
 		$fields[] = 'id';
 		$queryGenerator->setFields($fields);
-
+		
 		return parent::getListViewEntries($pagingModel);
 	}
 

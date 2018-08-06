@@ -12,7 +12,8 @@ include_once dirname(__FILE__) . '/../viewers/HeaderViewer.php';
 class Vtiger_PDF_InventoryHeaderViewer extends Vtiger_PDF_HeaderViewer {
 
 	function totalHeight($parent) {
-		$height = 100;
+//		$height = 100;
+		$height = 65;
 		
 		if($this->onEveryPage) return $height;
 		if($this->onFirstPage && $parent->onFirstPage()) $height;
@@ -25,10 +26,26 @@ class Vtiger_PDF_InventoryHeaderViewer extends Vtiger_PDF_HeaderViewer {
 		if($this->model) {
 			$headerColumnWidth = $headerFrame->w/3.0;
 			
+			// Title
+/*** Added ***/
+			$offsetX = 5;
+			$offsetY = 2;
+			
+			$modelTitle = $this->model->get('title');
+			
+			$titleHeight = $pdf->GetStringHeight($modelTitle, $contentWidth);
+			
+			$pdf->SetFont('kozgopromedium', 'B');
+//			$pdf->MultiCell($headerColumnWidth, $titleHeight, $modelTitle, 0, 'C', 0, 1, $headerFrame->x+$headerColumnWidth,
+			$pdf->MultiCell($headerFrame->w, $titleHeight, $modelTitle, 0, 'C', 0, 1, $headerFrame->x+$offsetX,
+				 $headerFrame->y+$offsetY);
+/************/
+
 			$modelColumns = $this->model->get('columns');
 			
 			// Column 1
 			$offsetX = 5;
+			$offsetY = 2;
 			
 			$modelColumn0 = $modelColumns[0];
 
@@ -43,26 +60,26 @@ class Vtiger_PDF_InventoryHeaderViewer extends Vtiger_PDF_HeaderViewer {
 			if($h > 30) {
 				$h = 30;
 			}
-			$pdf->Image($modelColumn0['logo'], $headerFrame->x, $headerFrame->y, $w, $h);
-			$imageHeightInMM = 30;
+//			$pdf->Image($modelColumn0['logo'], $headerFrame->x, $headerFrame->y, $w, $h);
+			$imageHeightInMM = 0;
 			
 			$pdf->SetFont('kozgopromedium', 'B');
 			$contentHeight = $pdf->GetStringHeight( $modelColumn0['summary'], $headerColumnWidth);
 			$pdf->MultiCell($headerColumnWidth, $contentHeight, $modelColumn0['summary'], 0, 'L', 0, 1, 
-				$headerFrame->x, $headerFrame->y+$imageHeightInMM+2);
+				$headerFrame->x+$offsetX, $pdf->GetY()+$offsetY);
 			
 			$pdf->SetFont('kozgopromedium', '');
 			$contentHeight = $pdf->GetStringHeight( $modelColumn0['content'], $headerColumnWidth);			
 			$pdf->MultiCell($headerColumnWidth, $contentHeight, $modelColumn0['content'], 0, 'L', 0, 1, 
-				$headerFrame->x, $pdf->GetY());
+				$headerFrame->x+$offsetX, $pdf->GetY());
 				
 			// Column 2
 			$offsetX = 5;
-			$pdf->SetY($headerFrame->y);
+			$pdf->SetY($headerFrame->y+$titleHeight);
+			$offsetY = 2;
 
 			$modelColumn1 = $modelColumns[1];
 			
-			$offsetY = 8;
 			foreach($modelColumn1 as $label => $value) {
 
 				if(!empty($value)) {
@@ -78,9 +95,13 @@ class Vtiger_PDF_InventoryHeaderViewer extends Vtiger_PDF_HeaderViewer {
 			
 			// Column 3
 			$offsetX = 10;
+			$pdf->SetY($headerFrame->y);
+			$offsetY = 2;
+//			$offsetY = 2+$titleHeight;
 			
 			$modelColumn2 = $modelColumns[2];
 			
+/****
 			$contentWidth = $pdf->GetStringWidth($this->model->get('title'));
 			$contentHeight = $pdf->GetStringHeight($this->model->get('title'), $contentWidth);
 			
@@ -88,16 +109,23 @@ class Vtiger_PDF_InventoryHeaderViewer extends Vtiger_PDF_HeaderViewer {
 			$roundedRectW = $contentWidth*2.0;
 			
 			$pdf->RoundedRect($roundedRectX, 10, $roundedRectW, 10, 3, '1111', 'DF', array(), array(205,201,201));
-			
 			$contentX = $roundedRectX + (($roundedRectW - $contentWidth)/2.0);
 			$pdf->SetFont('kozgopromedium', 'B');
 			$pdf->MultiCell($contentWidth*2.0, $contentHeight, $this->model->get('title'), 0, 'R', 0, 1, $contentX-$contentWidth,
 				 $headerFrame->y+2);
+***/			
+			$pdf->SetFont('kozgopromedium', '');
+			foreach($modelColumn2['dates'] as $l => $v) {
+				$pdf->MultiCell($headerColumnWidth-$offsetX, 7, sprintf('%s: %s', $l, $v), 0, 'R', 0, 1, 
+					$headerFrame->x+$headerColumnWidth*2.0+$offsetX, $pdf->GetY()+$offsetY);
+				$offsetY = 0;
+			}
 
-			$offsetY = 4;
-
+			$offsetY = 2;
 			foreach($modelColumn2 as $label => $value) {
-				if(is_array($value)) {
+				if($label == 'dates') {
+					continue;
+				} else if(is_array($value)) {
 					$pdf->SetFont('kozgopromedium', '');
 					foreach($value as $l => $v) {
 						$pdf->MultiCell($headerColumnWidth-$offsetX, 7, sprintf('%s: %s', $l, $v), 1, 'C', 0, 1, 
@@ -109,23 +137,24 @@ class Vtiger_PDF_InventoryHeaderViewer extends Vtiger_PDF_HeaderViewer {
 					
 				$pdf->SetFont('kozgopromedium', 'B');
 				$pdf->SetFillColor(205,201,201);
-                                if($label=='Shipping Address'){ 
+/***                                if($label=='Shipping Address'){ 
                                     $width=$pdf->GetStringWidth($value); 
                                     $height=$pdf->GetStringHeight($value,$width);
-                                    $pdf->MultiCell($headerColumnWidth-$offsetX, 7, $label, 1, 'L', 1, 1, $headerFrame->x+$headerColumnWidth*2.0+$offsetX,
-                                            $pdf->GetY()+$offsetY-$height-$offsetX-4.0); 
+                                    $pdf->MultiCell($headerColumnWidth-$offsetX, 7, $label, 1, 'L', 1, 1, $headerFrame->x+$headerColumnWidth+$offsetX,
+                                            $pdf->GetY()+$offsetY); 
 
                                     $pdf->SetFont('kozgopromedium', '');
                                     $pdf->MultiCell($headerColumnWidth-$offsetX, 7, $value, 1, 'L', 0, 1, $headerFrame->x+$headerColumnWidth*2.0+$offsetX, 
 					$pdf->GetY());
 				} else{ 
-                                    $pdf->MultiCell($headerColumnWidth-$offsetX, 7, $label, 1, 'L', 1, 1, $headerFrame->x+$headerColumnWidth, 
+***/
+                                    $pdf->MultiCell($headerColumnWidth-$offsetX, 7, $label, 1, 'L', 1, 1, $headerFrame->x+$headerColumnWidth*2.0+$offsetX, 
                                             $pdf->GetY()+$offsetY); 
 
                                     $pdf->SetFont('kozgopromedium', ''); 
-                                    $pdf->MultiCell($headerColumnWidth-$offsetX, 7, $value, 1, 'L', 0, 1, $headerFrame->x+$headerColumnWidth,  
+                                    $pdf->MultiCell($headerColumnWidth-$offsetX, 7, $value, 1, 'L', 0, 1, $headerFrame->x+$headerColumnWidth*2.0+$offsetX,  
                                             $pdf->GetY()); 
-                                    } 
+//                                    } 
                                 } 
                             } 
 			$pdf->setFont('kozgopromedium', '');

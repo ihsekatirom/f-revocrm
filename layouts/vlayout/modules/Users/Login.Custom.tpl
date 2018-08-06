@@ -15,7 +15,6 @@
 	<head>
 		<title>F-RevoCRM ログイン</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="IE=9; IE=10; IE=11" />
 		<!-- for Login page we are added -->
 		<link href="libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="libraries/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
@@ -121,14 +120,14 @@
 												<div class="control-group">
 													<label class="control-label" for="username"><b>ユーザー名</b></label>
 													<div class="controls">
-														<input type="text" id="username" name="username" placeholder="Username" value="">
+														<input type="text" id="username" name="username" placeholder="Username" value="admin">
 													</div>
 												</div>
 
 			<div class="control-group">
 													<label class="control-label" for="password"><b>パスワード</b></label>
 				<div class="controls">
-														<input type="password" id="password" name="password" placeholder="Password" value="">
+														<input type="password" id="password" name="password" placeholder="Password" value="admin">
 													</div>
 												</div>
 												<div class="control-group signin-button">
