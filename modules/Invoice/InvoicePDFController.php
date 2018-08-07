@@ -216,7 +216,7 @@ class Vtiger_InvoicePDFController extends Vtiger_InventoryPDFController{
 		$headerViewer->setModel($this->buildHeaderModel());
 		return $headerViewer;
 	}
-	
+
 //	function buildHeaderModelColumnLeft() {
 //		$modelColumnLeft = parent::buildHeaderModelColumnLeft();
 //		return $modelColumnLeft;
@@ -238,14 +238,14 @@ class Vtiger_InvoicePDFController extends Vtiger_InventoryPDFController{
 			);
 		return $modelColumn0;
 	}
-	
+
 	function buildHeaderModelColumnCenter() {
 		$subject = $this->focusColumnValue('subject');
 		$customerName = $this->resolveReferenceLabel($this->focusColumnValue('account_id'), 'Accounts');
 		$contactName = $this->resolveReferenceLabel($this->focusColumnValue('contact_id'), 'Contacts');
 		$purchaseOrder = $this->focusColumnValue('vtiger_purchaseorder');
 		$quoteName = $this->resolveReferenceLabel($this->focusColumnValue('quote_id'), 'Quotes');
-		
+
 		$subjectLabel = getTranslatedString('Subject', $this->moduleName);
 	$quoteNameLabel = getTranslatedString('Quote Name', $this->moduleName);
 		$customerNameLabel = getTranslatedString('Customer Name', $this->moduleName);
@@ -289,8 +289,15 @@ class Vtiger_InvoicePDFController extends Vtiger_InventoryPDFController{
 
 		// Company information
 		$result = $adb->pquery("SELECT * FROM vtiger_organizationdetails", array());
-		$num_rows = $adb->num_rows($result);
-		if($num_rows) {
+    $num_rows = $adb->num_rows($result);
+
+    $result_cf = $adb->pquery("SELECT * FROM vtiger_salesordercf WHERE salesorderid = 46", array());  
+    $num_rows_cf = $adb->num_rows($result_cf); 
+
+    $result_so = $adb->pquery("SELECT * FROM vtiger_salesorder WHERE salesorderid = 46", array()); 
+    $num_rows_so = $adb->num_rows($result_so);
+
+		if($num_rows && $num_rows_so && $num_rows_cf) {
 			$resultrow = $adb->fetch_array($result);
 
 			$addressValues = array();
@@ -310,15 +317,24 @@ class Vtiger_InvoicePDFController extends Vtiger_InventoryPDFController{
 
 			$issueDateLabel = getTranslatedString('Issued Date', $this->moduleName);
 			$validDateLabel = getTranslatedString('Due Date', $this->moduleName);
-	
+
 //					      $validDateLabel => $this->formatDate($this->focusColumnValue('duedate')),
+
+      $resultrow_so = $adb->fetch_array($result_so);
+      $salesorderValues = array();  
+      if(!empty($resultrow_so['salesorder_no'])) $salesorderValues[]= $resultrow_so['salesorder_no'];  
+
+      $resultrow_cf = $adb->fetch_array($result_cf);  
+      $salesorderValues = array();  
+      if(!empty($resultrow_cf['cf_763'])) $salesordercfValues[]= $resultrow_cf['cf_763'];
+
 			$modelColumn2 = array(
 					'dates' => array(
 						$issueDateLabel  => $this->formatDate(date("Y-m-d")),
 						'請求書番号'	=> $this->focusColumnValue('invoice_no')
 					),
 					'order_no'	    =>      array(
-							'受注No.'       => $this->focusColumnValue('salesorderno'), 
+							'受注No.'       => $resultrow_so['salesorder_no'], 
 							'指図No.'       => $this->focusColumnValue('customerno'),
 							'メーカーNo.'   => 2512823,
 					),
@@ -326,8 +342,8 @@ class Vtiger_InvoicePDFController extends Vtiger_InventoryPDFController{
 					'出荷元名' => decode_html($resultrow['organizationname']),
 //					'content' => decode_html($this->joinValues($addressValues, ' '). $this->joinValues($additionalCompanyInfo, ' ')),
 					'fieldvalue'	    =>      array(
-							'受発注日'	=> '2018-05-16',
-							'出荷日'	=> '2018-07-06',
+							'受発注日'	=> $resultrow_cf['cf_763'], 
+							'出荷日'	=> $this->focusColumnValue('cf_761'), 
 							'摘要'		=> ''
 					)
 				);
