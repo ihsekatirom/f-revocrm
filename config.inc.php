@@ -1,7 +1,7 @@
 <?php
 /*********************************************************************************
  * The contents of this file are subject to the SugarCRM Public License Version 1.1.2
- * ("License"); You may not use this file except in compliance with the 
+ * ("License"); You may not use this file except in compliance with the
  * License. You may obtain a copy of the License at http://www.sugarcrm.com/SPL
  * Software distributed under the License is distributed on an  "AS IS"  basis,
  * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
@@ -25,12 +25,12 @@ include('vtigerversion.php');
 // memory limit default value = 64M
 ini_set('memory_limit','512M');
 
-// show or hide calendar, world clock, calculator, chat and CKEditor 
-// Do NOT remove the quotes if you set these to false! 
+// show or hide calendar, world clock, calculator, chat and CKEditor
+// Do NOT remove the quotes if you set these to false!
 $CALENDAR_DISPLAY = 'true';
 $WORLD_CLOCK_DISPLAY = 'true';
 $CALCULATOR_DISPLAY = 'true';
-$CHAT_DISPLAY = 'true'; 
+$CHAT_DISPLAY = 'true';
 $USE_RTE = 'true';
 
 // helpdesk support email id and support name (Example: 'support@vtiger.com' and 'vtiger support')
@@ -82,7 +82,7 @@ $dbconfigoption['ssl'] = false;
 
 $host_name = $dbconfig['db_hostname'];
 
-$site_URL = 'http://52.90.22.136/f-revocrm/';
+$site_URL = 'http://54.209.87.64/f-revocrm/';
 
 // url for customer portal (Example: http://vtiger.com/portal)
 $PORTAL_URL = $site_URL.'/customerportal';
@@ -107,9 +107,9 @@ $upload_dir = 'cache/upload/';
 $upload_maxsize = 3000000;
 
 // flag to allow export functionality
-// 'all' to allow anyone to use exports 
-// 'admin' to only allow admins to export 
-// 'none' to block exports completely 
+// 'all' to allow anyone to use exports
+// 'admin' to only allow admins to export
+// 'none' to block exports completely
 // allow_exports default value = all
 $allow_exports = 'all';
 
