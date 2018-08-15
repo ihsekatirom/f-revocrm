@@ -46,7 +46,7 @@
 				// Column 1
 //				$pdf->SetY($headerFrame->y);
 				$offsetX = 5;
-				$offsetY = 2;
+				$offsetY = 0;
 
 				$modelColumnLeft = $modelColumns[0];
 				foreach($modelColumnLeft as $label => $value) {
