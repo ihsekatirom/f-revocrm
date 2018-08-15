@@ -22,23 +22,24 @@
 				$offsetX = 2;
 				$offsetY = 0;
 
-				$modelDescription = $this->model->get('description');
+        $modelTitle = $this->model->get('title');
+//				$modelDescription = $this->model->get('description');
 
-				$titleHeight = $pdf->GetStringHeight($modelDescription, $headerColumnWidth);
+				$titleHeight = $pdf->GetStringHeight($modelTitle['description'], $headerColumnWidth);
 
 				$pdf->SetFont('kozgopromedium', '');
 				$pdf->SetFontSize(5);
-				$pdf->MultiCell($headerFrame->w, $titleHeight, $modelDescription, 0, 'L', 0, 1, $headerFrame->x+$offsetX,
+				$pdf->MultiCell($headerFrame->w, $titleHeight, $modelTitle['description'], 0, 'L', 0, 1, $headerFrame->x+$offsetX,
 				$headerFrame->y+$offsetY);
 				$pdf->SetFontSize(12);
 
-				$modelTitle = $this->model->get('title');
+//				$modelTitle = $this->model->get('title');
 
-				$titleHeight = $pdf->GetStringHeight($modelTitle, $headerColumnWidth);
+				$titleHeight = $pdf->GetStringHeight($modelTitle['title'], $headerColumnWidth);
 
 				$pdf->SetFont('kozgopromedium', 'B');
 				$pdf->SetFontSize(24);
-				$pdf->MultiCell($headerFrame->w, $titleHeight, $modelTitle, 0, 'L', 0, 1, $headerFrame->x+$offsetX,
+				$pdf->MultiCell($headerFrame->w, $titleHeight, $modelTitle['title'], 0, 'L', 0, 1, $headerFrame->x+$offsetX,
 				$headerFrame->y+$offsetY);
 				$pdf->SetFontSize(12);
 
