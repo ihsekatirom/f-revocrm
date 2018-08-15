@@ -20,15 +20,24 @@
 				// Title
 
 				$offsetX = 2;
-				$offsetY = 5;
-			
+				$offsetY = 0;
+
 				$modelTitle = $this->model->get('title');
-			
-				$titleHeight = $pdf->GetStringHeight($modelTitle, $headerColumnWidth);
-			
+
+        $titleHeight = $pdf->GetStringHeight($modelTitle['description'], $headerColumnWidth);
+
+				$pdf->SetFont('kozgopromedium', '');
+				$pdf->SetFontSize(12);
+				$pdf->MultiCell($headerFrame->w, $titleHeight, $modelTitle['description'], 0, 'L', 1, 1, $headerFrame->x+$offsetX,
+				$headerFrame->y+$offsetY);
+				$pdf->SetFontSize(12);
+
+//				$titleHeight = $pdf->GetStringHeight($modelTitle, $headerColumnWidth);
+        $titleHeight = $pdf->GetStringHeight($modelTitle['title'], $headerColumnWidth);
+
 				$pdf->SetFont('kozgopromedium', 'B');
 				$pdf->SetFontSize(24);
-				$pdf->MultiCell($headerFrame->w, $titleHeight, $modelTitle, 0, 'L', 0, 1, $headerFrame->x+$offsetX,
+				$pdf->MultiCell($headerFrame->w, $titleHeight, $modelTitle['title'], 0, 'L', 0, 1, $headerFrame->x+$offsetX,
 				$headerFrame->y+$offsetY);
 				$pdf->SetFontSize(12);
 
@@ -87,7 +96,7 @@
 
 				$pdf->SetFont('kozgopromedium', '');
 				foreach($modelColumnRight['dates'] as $l => $v) {
-					$pdf->MultiCell($headerColumnWidth-$offsetX, 7, sprintf('%s: %s', $l, $v), 0, 'R', 0, 1, 
+					$pdf->MultiCell($headerColumnWidth-$offsetX, 7, sprintf('%s: %s', $l, $v), 0, 'R', 0, 1,
 						$headerFrame->x+$headerColumnWidth*2.0+$offsetX, $pdf->GetY()+$offsetY);
 					$offsetY = 0;
 				}
@@ -109,9 +118,9 @@
                                                 $offsetY);
 
                                         $pdf->SetFont('kozgopromedium', '');
-                                        $pdf->MultiCell($contentWidth, 7, $value, 1, 'C', 0, 1, $headerFrame->x+$headerColumnWidth*1.0+$offsetX, 
+                                        $pdf->MultiCell($contentWidth, 7, $value, 1, 'C', 0, 1, $headerFrame->x+$headerColumnWidth*1.0+$offsetX,
                                                 $pdf->GetY());
-					$offsetX += $contentWidth; 
+					$offsetX += $contentWidth;
                                         }
                                 }
 
@@ -153,9 +162,9 @@
                                                 $offsetY);
 
                                         $pdf->SetFont('kozgopromedium', '');
-                                        $pdf->MultiCell($contentWidth, 7, $value, 1, 'C', 0, 1, $headerFrame->x+$headerColumnWidth*1.0+$offsetX, 
+                                        $pdf->MultiCell($contentWidth, 7, $value, 1, 'C', 0, 1, $headerFrame->x+$headerColumnWidth*1.0+$offsetX,
                                                 $pdf->GetY());
-					$offsetX += $contentWidth; 
+					$offsetX += $contentWidth;
                                         }
                                 }
 				$pdf->setFont('kozgopromedium', '');
