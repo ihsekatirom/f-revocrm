@@ -29,7 +29,7 @@
 
 				$pdf->SetFont('kozgopromedium', '');
 				$pdf->SetFontSize(12);
-				$pdf->MultiCell($headerFrame->w, $titleHeight, $modelTitle['description'], 0, 'L', 1, 1, $headerFrame->x+$offsetX,
+				$pdf->MultiCell($headerFrame->w, $titleHeight, $modelTitle['description'], 0, 'L', 0, 1, $headerFrame->x+$offsetX,
 				$headerFrame->y+$offsetY);
 				$pdf->SetFontSize(12);
 

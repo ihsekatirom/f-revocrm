@@ -33,12 +33,12 @@
 				$pdf->SetFontSize(12);
 
 //				$titleHeight = $pdf->GetStringHeight($modelTitle, $headerColumnWidth);
-        $titleHeight = $pdf->GetStringHeight($modelTitle['title'], $headerColumnWidth);
+        $titleHeight = $titleHeight + $pdf->GetStringHeight($modelTitle['title'], $headerColumnWidth);
 
 				$pdf->SetFont('kozgopromedium', 'B');
 				$pdf->SetFontSize(24);
 				$pdf->MultiCell($headerFrame->w, $titleHeight, $modelTitle['title'], 0, 'L', 0, 1, $headerFrame->x+$offsetX,
-				$headerFrame->y+$offsetY);
+        $pdf->GetY());
 				$pdf->SetFontSize(12);
 
 				$modelColumns = $this->model->get('columns');
@@ -101,10 +101,11 @@
 					$offsetY = 0;
 				}
 
+/***
 				if($pdf->GetY() < $titleHeight) {
 					$pdf->SetY($titleHeight);
 				}
-
+***/
 				$offsetX = 0;
 				$offsetY = $pdf->GetY()+2;
 
