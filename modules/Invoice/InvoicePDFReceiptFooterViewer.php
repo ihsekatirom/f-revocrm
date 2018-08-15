@@ -48,7 +48,7 @@ class InvoicePDFReceiptFooterViewer extends Vtiger_PDF_InventoryFooterViewer {
 			$description = $this->model->get(self::$DESCRIPTION_DATA_KEY);
 			$descriptionHeight = $pdf->GetStringHeight($description, $footerFrame->w);
 			$pdf->SetFillColor(205,201,201);
-			$pdf->MultiCell($footerFrame->w, $descriptionHeight, $description, 1, 'L', 0, 1, $footerFrame->x, $footerFrame->y);
+			$pdf->MultiCell($footerFrame->w, $descriptionHeight, $description, 0, 'L', 0, 1, $footerFrame->x, $footerFrame->y);
 		}
 	}
 }
