@@ -62,7 +62,7 @@
 						$pdf->SetFontSize(12);
 
 						$pdf->SetFont('kozgopromedium', 'B');
-						$pdf->MultiCell(35, 28, '', 1, 'C', 0, 1, $headerFrame->x+($headerColumnWidth-35-$offsetX)/2, $pdf->GetY());
+						$pdf->MultiCell(35, 23, '', 1, 'C', 0, 1, $headerFrame->x+($headerColumnWidth-35-$offsetX)/2, $pdf->GetY());
 					}
 				}
 
