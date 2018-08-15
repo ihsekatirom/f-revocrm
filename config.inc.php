@@ -82,7 +82,7 @@ $dbconfigoption['ssl'] = false;
 
 $host_name = $dbconfig['db_hostname'];
 
-$site_URL =  'http://54.210.135.241/f-revocrm/';
+$site_URL = 'http://34.234.193.0/f-revocrm/';
 
 // url for customer portal (Example: http://vtiger.com/portal)
 $PORTAL_URL = $site_URL.'/customerportal';
