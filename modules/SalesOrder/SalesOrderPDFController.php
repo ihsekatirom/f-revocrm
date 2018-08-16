@@ -139,7 +139,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 			$additionalCompanyInfo = array();
 			if(!empty($resultrow['phone']))	 $additionalCompanyInfo[]= "\n".getTranslatedString("Phone: ", $this->moduleName). $resultrow['phone'];
 			if(!empty($resultrow['fax']))	   $additionalCompanyInfo[]= "\n".getTranslatedString("Fax: ", $this->moduleName). $resultrow['fax'];
-			if(!empty($resultrow['website']))       $additionalCompanyInfo[]= "\n".getTranslatedString("Website: ", $this->moduleName). $resultrow['website'];
+//			if(!empty($resultrow['website']))       $additionalCompanyInfo[]= "\n".getTranslatedString("Website: ", $this->moduleName). $resultrow['website'];
 			if(!empty($resultrow['vatid']))	 $additionalCompanyInfo[]= "\n".getTranslatedString("VAT ID: ", $this->moduleName). $resultrow['vatid'];
 
 			$issueDateLabel = getTranslatedString('Issued Date', $this->moduleName);
@@ -149,7 +149,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 			$modelColumn2 = array(
 					'dates' => array(
 						$issueDateLabel  => $this->formatDate(date("Y-m-d")),
-						'販売受注番号'  => $this->focusColumnValue('salesorder_no'),
+						'受注番号'  => $this->focusColumnValue('salesorder_no'),
 					),
 				 'summary' => decode_html($resultrow['organizationname']),
 				 'content' => decode_html($this->joinValues($addressValues, ' '). $this->joinValues($additionalCompanyInfo, ' '))
