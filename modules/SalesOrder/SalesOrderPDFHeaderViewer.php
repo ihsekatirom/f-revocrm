@@ -19,7 +19,7 @@
 				$headerColumnWidth = $headerFrame->w/3.0;
 
 				// Title
-				$offsetX = 2;
+				$offsetX = 5;
 				$offsetY = 0;
 
 				$modelTitle = $this->model->get('title');
@@ -77,7 +77,7 @@
           if(! is_array($value)) {
 
 						$pdf->SetFont('kozgopromedium', 'B');
-						$pdf->MultiCell($headerColumnWidth*2.0-$offsetX, 7, $label.'： '.$value, 0, 'L', 0, 1, $headerFrame->x+$offsetX, $pdf->GetY()+$offsetY);
+						$pdf->MultiCell($headerColumnWidth*2.0-$offsetX, 7, $label.'： '.$value, 0, 'L', 0, 1, $headerFrame->x+$offsetX, $fieldColumnY);
           }
         }
 
