@@ -87,7 +87,7 @@ class SalesOrderPDFContentViewer extends Vtiger_PDF_InventoryContentViewer {
 		$contentFrame = $parent->getContentFrame();
 
 		$contentLineX = $contentFrame->x; $contentLineY = $contentFrame->y;
-		$overflowOffsetH = 8; // This is offset used to detect overflow to next page
+		$overflowOffsetH = 6; // This is offset used to detect overflow to next page
 		for ($index = 0; $index < $totalModels; ++$index) {
 			$model = $models[$index];
 
