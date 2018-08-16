@@ -100,7 +100,7 @@
 ***/
 				$offsetX = 0;
 //				$fieldColumnY = $pdf->GetY();
-				$fieldColumnY = $headerFrame->h - 7;
+				$fieldColumnY = $headerFrame->h - 7*2;
 //				$offsetY = $pdf->GetY();
 
         foreach($modelColumnLeft['fieldvalue'] as $label => $value) {
@@ -214,7 +214,7 @@
 
 				// Add the border cell at the end
 				// This is required to reset Y position for next write
-				$pdf->MultiCell($headerFrame->w, $headerFrame->h-$headerFrame->y, "", 1, 'L', 0, 1, $headerFrame->x, $headerFrame->y);
+				$pdf->MultiCell($headerFrame->w, $headerFrame->h-$headerFrame->y, "", 0, 'L', 0, 1, $headerFrame->x, $headerFrame->y);
 			}
 		}
 }

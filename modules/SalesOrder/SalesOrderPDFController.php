@@ -58,8 +58,8 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	function buildHeaderModelColumnLeft() {
 		$customerName = $this->resolveReferenceLabel($this->focusColumnValue('account_id'), 'Accounts');
 		$contactName = $this->resolveReferenceLabel($this->focusColumnValue('contact_id'), 'Contacts');
-		$contactTel = $this->resolveReferenceLabel($this->focusColumnValue('office_phone'), 'Contacts');
-		$contactFax = $this->resolveReferenceLabel($this->focusColumnValue('fax'), 'Contacts');
+		$contactInfo = $this->buildHeaderContactInfo();
+//		$contactFax = $this->resolveReferenceLabel($this->focusColumnValue('fax'), 'Contacts');
 		$contactNameLabel = getTranslatedString('Contact Name', $this->moduleName);
 //		$billingAddressLabel = getTranslatedString('Billing Address', $this->moduleName);
 //		$shippingAddressLabel = getTranslatedString('Shipping Address', $this->moduleName);
@@ -67,7 +67,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		$shippingAddress = $this->buildHeaderShippingAddress();
 
 		$CustomerInfo	= decode_html($this->joinValues(array($customerName.' 御中', $contactName.' 様')));
-		$additionalContactInfo	= decode_html($this->joinValues(array($contactTel, $contactFax, '請求先：'.$billingAddress, '納品先：'.$shippingAddress)));
+		$additionalContactInfo	= decode_html($this->joinValues(array($contactInfo, '請求先：'.$billingAddress, '納品先：'.$shippingAddress)));
 
 		$modelColumn0 = array(
 				'customer'			=>      $CustomerInfo,
@@ -77,7 +77,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 						'指図No.'       => 147619,
 						'メーカーNo.'   => 2512823,
 						'発注日'	=> '2018-05-16',
-						'納品日'	=> '2018-07-6'
+						'納品予定日'	=> '2018-07-6'
 				)
 			);
 		return $modelColumn0;
@@ -189,6 +189,24 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		$shipStreet	= $this->focusColumnValues(array('ship_street'));
 		$address	= $this->joinValues(array($shipCode, $shipState, $shipCity, $shipStreet), ' ');
 		return $address;
+	}
+
+	function buildHeaderContactInfo() {
+		global $adb;
+
+		// Contact information
+		$result = $adb->pquery("SELECT * FROM vtiger_contactdetails WHERE contactid = ".$this->focusColumnValue('contact_id'), array());
+		$num_rows = $adb->num_rows($result);
+		if($num_rows) {
+			$resultrow = $adb->fetch_array($result);
+
+			$additionalContactInfo = array();
+			if(!empty($resultrow['phone']))	 $additionalContactInfo[]= getTranslatedString("Phone: ", $this->moduleName). $resultrow['phone'];
+			if(!empty($resultrow['fax']))	   $additionalContactInfo[]= getTranslatedString("Fax: ", $this->moduleName). $resultrow['fax'];
+//			if(!empty($resultrow['email']))	 $additionalContactInfo[]= getTranslatedString("Mail: ", $this->moduleName). $resultrow['email'];
+
+			$this->joinValues($additionalCompanyInfo);
+		}
 	}
 }
 ?>
