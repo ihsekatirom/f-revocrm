@@ -67,7 +67,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		$shippingAddress = $this->buildHeaderShippingAddress();
 
 		$CustomerInfo	= decode_html($this->joinValues(array($customerName.' 御中', $contactName.' 様')));
-		$additionalContactInfo	= decode_html($this->joinValues(array($contactInfo, '請求先：'.$billingAddress, '納品先：'.$shippingAddress)));
+		$additionalContactInfo	= decode_html($this->joinValues(array('請求先：'.$billingAddress, '納品先：'.$shippingAddress, $contactInfo)));
 
 		$modelColumn0 = array(
 				'customer'			=>      $CustomerInfo,
@@ -153,11 +153,15 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 			$validDateLabel = getTranslatedString('Due Date', $this->moduleName);
 
 //					      $validDateLabel => $this->formatDate($this->focusColumnValue('duedate')),
+			$printInfo	= joinValues(array($issueDateLabel.$this->formatDate(date("Y-m-d")),'受注注文番号：'.$this->focusColumnValue('salesorder_no')));
+
 			$modelColumn2 = array(
-					'dates' => array(
+				'dates' => decode_html($printInfo),
+/***
 						$issueDateLabel  => $this->formatDate(date("Y-m-d")),
 						'販売受注番号'  => $this->focusColumnValue('salesorder_no'),
 					),
+***/
 				 'summary' => decode_html($resultrow['organizationname']),
 				 'content' => decode_html($this->joinValues($addressValues, ' '). $this->joinValues($additionalCompanyInfo, ' '))
 				);
