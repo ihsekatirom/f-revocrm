@@ -21,7 +21,7 @@
 				// Title
 
 				$offsetX = 2;
-				$offsetY = 5;
+				$offsetY = 0;
 
 				$modelTitle = $this->model->get('title');
 
