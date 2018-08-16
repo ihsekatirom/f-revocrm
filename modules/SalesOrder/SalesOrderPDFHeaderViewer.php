@@ -62,7 +62,7 @@
 					$headerFrame->x, $pdf->GetY()+$offsetY);
 
 				$pdf->SetFont('kozgopromedium', '');
-				$pdf->MultiCell($headerColumnWidth*2, 7, $modelColumnLeft['contact'], 0, 'L', 0, 1,
+				$pdf->MultiCell($headerColumnWidth*2, 7, $modelColumnLeft['contact'], 1, 'L', 0, 1,
 					$headerFrame->x, $pdf->GetY());
 
 
@@ -99,6 +99,7 @@
 
 				// Column 2
 				$offsetX = 5;
+				$offsetY = 0;
 				$pdf->SetY($headerFrame->y + $titleHeight);
 
 				$modelColumnCenter = $modelColumns[1];
@@ -150,7 +151,7 @@
 				foreach($modelColumnRight as $label => $value) {
 					$fontInpact = ($label == 'summary') ? 'B' : '';
 					$pdf->SetFont('kozgopromedium', $fontInpact);
-					$pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, $value, 0, 'R', 0, 1, $headerFrame->x+$headerColumnWidth*1.5+$offsetX,
+					$pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, $value, 1, 'R', 0, 1, $headerFrame->x+$headerColumnWidth*1.5+$offsetX,
 						$pdf->GetY()+$offsetY);
 //					$offsetY = 1;
 				}
