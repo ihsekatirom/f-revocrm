@@ -225,7 +225,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	}
 
 	function getFooterViewer() {
-		$footerViewer = new SalesOrderPPDFFooterViewer();
+		$footerViewer = new SalesOrderPDFFooterViewer();
 		$footerViewer->setModel($this->buildFooterModel());
 //		$footerViewer->setLabelModel($this->buildFooterLabelModel());
 //    $footerViewer->setOnEveryPage();
