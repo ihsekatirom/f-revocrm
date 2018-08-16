@@ -197,8 +197,8 @@
 				foreach($modelColumnRight as $label => $value) {
 					if($label == 'dates') {
 						$pdf->SetFont('kozgopromedium', '');
-						$pdf->MultiCell($headerColumnWidth-$offsetX, 7, $modelColumnRight['dates'], 0, 'R', 0, 1,
-							$headerFrame->x+$headerColumnWidth*2.0+$offsetX, $pdf->GetY()+$offsetY);
+						$pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, $modelColumnRight['dates'], 0, 'R', 0, 1,
+							$headerFrame->x+$headerColumnWidth*1.5+$offsetX, $pdf->GetY()+$offsetY);
 						continue;
 					} else if(is_array($value)) {
 						$pdf->SetFont('kozgopromedium', '');
