@@ -71,6 +71,7 @@
 
 				$offsetY = 0;
         foreach($modelColumnLeft['fieldvalue'] as $label => $value) {
+/***
           if(is_array($value)) {
             $pdf->SetFont('kozgopromedium', '');
             foreach($value as $l => $v) {
@@ -79,6 +80,7 @@
               $offsetY = 0;
             }
           } else {
+***/
             $offsetY = 1;
 
             $pdf->SetFont('kozgopromedium', 'B');
@@ -89,7 +91,7 @@
             $pdf->SetFont('kozgopromedium', '');
             $pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, $value, 0, 'L', 0, 1, $headerFrame->x,
               $pdf->GetY());
-          }
+//          }
         }
 
 				$offsetX = 0;
