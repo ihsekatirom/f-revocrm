@@ -19,7 +19,7 @@
 				$headerColumnWidth = $headerFrame->w/3.0;
 
 				// Title
-				$offsetX = 5;
+				$offsetX = 2;
 				$offsetY = 0;
 
 				$modelTitle = $this->model->get('title');
@@ -38,8 +38,6 @@
 				// Column 1
 				$pdf->SetY($headerFrame->y);
 
-				$offsetY = 2;
-
 				$modelColumnLeft = $modelColumns[0];
 
 //				list($imageWidth, $imageHeight, $imageType, $imageAttr) = getimagesize($modelColumnLeft['logo']);
@@ -57,7 +55,7 @@
 
 
 				// Address(Costomer Info)
-				$offsetY = 0;
+				$offsetY = 12;
 				$pdf->SetFont('kozgopromedium', 'B');
 				$contentHeight = $pdf->GetStringHeight( $modelColumnLeft['customer'], $headerColumnWidth*1.5);
 				$pdf->MultiCell($headerColumnWidth*1.5, $contentHeight, $modelColumnLeft['customer'], 0, 'L', 0, 1,
@@ -77,7 +75,7 @@
           if(! is_array($value)) {
 
 						$pdf->SetFont('kozgopromedium', 'B');
-						$pdf->MultiCell($headerColumnWidth*2.0-$offsetX, 7, $label.'： '.$value, 0, 'L', 0, 1, $headerFrame->x+$offsetX, $fieldColumnY);
+						$pdf->MultiCell($headerColumnWidth*2.0-$offsetX, 7, $label.'：'.$value, 0, 'L', 0, 1, $headerFrame->x+$offsetX, $fieldColumnY);
           }
         }
 
