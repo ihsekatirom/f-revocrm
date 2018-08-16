@@ -9,7 +9,7 @@
  ************************************************************************************/
 include_once 'vtlib/Vtiger/PDF/inventory/FooterViewer.php';
 
-class InvoicePDFReceiptFooterViewer extends Vtiger_PDF_InventoryFooterViewer {
+class InvoicePDFFooterViewer extends Vtiger_PDF_InventoryFooterViewer {
 
 	function display($parent) {
 
