@@ -195,6 +195,7 @@
 				$offsetY = 0;
 
 				foreach($modelColumnRight as $label => $value) {
+/***
 					if($label == 'dates') {
 						$pdf->SetFont('kozgopromedium', '');
 						$pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, $modelColumnRight['dates'], 0, 'R', 0, 1,
@@ -208,7 +209,7 @@
 							$offsetY = 0;
 						}
 					} else {
-
+***/
 //					$pdf->SetFont('kozgopromedium', 'B');
 //					$pdf->SetFillColor(205,201,201);
 //					$pdf->MultiCell($headerColumnWidth-$offsetX, 7, $label, 0, 'L', 1, 1, $headerFrame->x+$headerColumnWidth*2.0+$offsetX,
@@ -219,7 +220,7 @@
 						$pdf->GetY()+$offsetY);
 
 						$offsetY = 1;
-					}
+//					}
 				}
 				$pdf->setFont('kozgopromedium', '');
 
