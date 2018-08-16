@@ -151,7 +151,7 @@
 				foreach($modelColumnRight as $label => $value) {
 					$fontInpact = ($label == 'summary') ? 'B' : '';
 					$pdf->SetFont('kozgopromedium', $fontInpact);
-					$pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, $value, 1, 'R', 0, 1, $headerFrame->x+$headerColumnWidth*1.5+$offsetX,
+					$pdf->MultiCell($headerColumnWidth*1-$offsetX, 7, $value, 1, 'R', 0, 1, $headerFrame->x+$headerColumnWidth*2+$offsetX,
 						$pdf->GetY()+$offsetY);
 //					$offsetY = 1;
 				}
