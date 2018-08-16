@@ -11,7 +11,7 @@ include_once 'vtlib/Vtiger/PDF/inventory/ContentViewer.php';
 
 class InvoicePDFContentViewer extends Vtiger_PDF_InventoryContentViewer {
 
-	protected $headerRowHeight = 13;
+	protected $headerRowHeight = 12;
 	protected $onSummaryPage   = false;
 
 	function __construct() {
