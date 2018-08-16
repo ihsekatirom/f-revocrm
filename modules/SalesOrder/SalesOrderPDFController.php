@@ -63,8 +63,8 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		$shippingAddressLabel = getTranslatedString('Shipping Address', $this->moduleName);
 
 		$modelColumn0 = array(
-				'customer'			=>      decode_html($customerName.' 御中'.'\n'.$contactName.' 様'),
-				'address'	      =>      decode_html('請求先：'.$this->buildHeaderBillingAddress().'\n'.'納品先：'.$this->buildHeaderShippingAddress()),
+				'customer'			=>      decode_html($customerName.' 御中'."\n".$contactName.' 様'),
+				'address'	      =>      decode_html('請求先：'.$this->buildHeaderBillingAddress()."\n".'納品先：'.$this->buildHeaderShippingAddress()),
 				'fieldvalue'	    =>      array(
 						'受注No.'       => '',
 						'指図No.'       => 147619,
