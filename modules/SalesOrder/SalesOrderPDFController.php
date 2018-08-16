@@ -58,13 +58,19 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	function buildHeaderModelColumnLeft() {
 		$customerName = $this->resolveReferenceLabel($this->focusColumnValue('account_id'), 'Accounts');
 		$contactName = $this->resolveReferenceLabel($this->focusColumnValue('contact_id'), 'Contacts');
+		$contactTel = $this->resolveReferenceLabel($this->focusColumnValue('pone'), 'Contacts');
+		$contactFax = $this->resolveReferenceLabel($this->focusColumnValue('fax'), 'Contacts');
 		$contactNameLabel = getTranslatedString('Contact Name', $this->moduleName);
-		$billingAddressLabel = getTranslatedString('Billing Address', $this->moduleName);
-		$shippingAddressLabel = getTranslatedString('Shipping Address', $this->moduleName);
+//		$billingAddressLabel = getTranslatedString('Billing Address', $this->moduleName);
+//		$shippingAddressLabel = getTranslatedString('Shipping Address', $this->moduleName);
+		$billingAddress = $this->buildHeaderBillingAddress();
+		$shippingAddress = $this->buildHeaderShippingAddress();
+
+		$additionalContactInfo	= $this->joinValues(array($contactTel, $contactFax, '請求先：'.$billingAddress, '納品先：'.$shippingAddress), "/n");
 
 		$modelColumn0 = array(
 				'customer'			=>      decode_html($customerName.' 御中'."\n".$contactName.' 様'),
-				'address'	      =>      decode_html('請求先：'.$this->buildHeaderBillingAddress()."\n".'納品先：'.$this->buildHeaderShippingAddress()),
+				'contact'	      =>      decode_html($additionalContactInfo),
 				'fieldvalue'	    =>      array(
 						'受注No.'       => '',
 						'指図No.'       => 147619,
@@ -138,7 +144,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
 			$additionalCompanyInfo = array();
 			if(!empty($resultrow['phone']))	 $additionalCompanyInfo[]= "\n".getTranslatedString("Phone: ", $this->moduleName). $resultrow['phone'];
-			if(!empty($resultrow['fax']))	   $additionalCompanyInfo[]= "　".getTranslatedString("Fax: ", $this->moduleName). $resultrow['fax'];
+			if(!empty($resultrow['fax']))	   $additionalCompanyInfo[]= "\n".getTranslatedString("Fax: ", $this->moduleName). $resultrow['fax'];
 //			if(!empty($resultrow['website']))       $additionalCompanyInfo[]= "\n".getTranslatedString("Website: ", $this->moduleName). $resultrow['website'];
 //			if(!empty($resultrow['vatid']))	 $additionalCompanyInfo[]= "\n".getTranslatedString("VAT ID: ", $this->moduleName). $resultrow['vatid'];
 
@@ -149,7 +155,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 			$modelColumn2 = array(
 					'dates' => array(
 						$issueDateLabel  => $this->formatDate(date("Y-m-d")),
-						'受注番号'  => $this->focusColumnValue('salesorder_no'),
+						'販売受注番号'  => $this->focusColumnValue('salesorder_no'),
 					),
 				 'summary' => decode_html($resultrow['organizationname']),
 				 'content' => decode_html($this->joinValues($addressValues, ' '). $this->joinValues($additionalCompanyInfo, ' '))
