@@ -359,6 +359,26 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		return $modelColumn2;
 	}
 
+	function buildFooterModel() {
+		$footerModel = new Vtiger_PDF_Model();
+//		$footerModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_DATA_KEY, from_html($this->focusColumnValue('description')));
+		$footerModel->set(Vtiger_PDF_InventoryFooterViewer::$TERMSANDCONDITION_DATA_KEY, from_html($this->focusColumnValue('terms_conditions')));
+		return $footerModel;
+	}
+
+	function buildFooterLabelModel() {
+		$labelModel = new Vtiger_PDF_Model();
+//		$labelModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_LABEL_KEY, getTranslatedString('Description',$this->moduleName));
+		$labelModel->set(Vtiger_PDF_InventoryFooterViewer::$TERMSANDCONDITION_LABEL_KEY, getTranslatedString('Terms & Conditions',$this->moduleName));
+		return $labelModel;
+	}
+
+	function buildPagerModel() {
+		$footerModel = new Vtiger_PDF_Model();
+		$footerModel->set('format', '-%s-');
+		return $footerModel;
+	}
+
 	function getWatermarkContent() {
 		return $this->focusColumnValue('sostatus');
 	}
