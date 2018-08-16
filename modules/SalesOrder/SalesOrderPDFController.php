@@ -21,8 +21,6 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 					$pdfgenerator = $this->getPDFGenerator();
 
 					$this->headerTitleLabel = '御注文確認書';
-//					$this->headerDescription = '';
-					$this->footerDescription = '　';
 					$pdfgenerator->setPagerViewer($this->getPagerViewer());
 					$pdfgenerator->setHeaderViewer($this->getHeaderViewer());
 					$pdfgenerator->setContentViewer($this->getContentViewer());
@@ -231,7 +229,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 //		$footerViewer->setLabelModel($this->buildFooterLabelModel());
 //    $footerViewer->setOnEveryPage();
 //		$footerViewer->setOnLastPage();
-		$footerViewer = new Vtiger_PDF_InventoryFooterViewer();
+		$footerViewer = new SalesOrderPDFFooterViewer();
 		$footerViewer->setModel($this->buildFooterModel());
 		$footerViewer->setLabelModel($this->buildFooterLabelModel());
 //		$footerViewer->setOnLastPage();
@@ -362,14 +360,14 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	function buildFooterModel() {
 		$footerModel = new Vtiger_PDF_Model();
 //		$footerModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_DATA_KEY, from_html($this->focusColumnValue('description')));
-		$footerModel->set(Vtiger_PDF_InventoryFooterViewer::$TERMSANDCONDITION_DATA_KEY, from_html($this->focusColumnValue('terms_conditions')));
+		$footerModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_DATA_KEY, from_html($this->focusColumnValue('terms_conditions')));
 		return $footerModel;
 	}
 
 	function buildFooterLabelModel() {
 		$labelModel = new Vtiger_PDF_Model();
 //		$labelModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_LABEL_KEY, getTranslatedString('Description',$this->moduleName));
-		$labelModel->set(Vtiger_PDF_InventoryFooterViewer::$TERMSANDCONDITION_LABEL_KEY, getTranslatedString('Terms & Conditions',$this->moduleName));
+		$labelModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_LABEL_KEY, getTranslatedString('Terms & Conditions',$this->moduleName));
 		return $labelModel;
 	}
 
