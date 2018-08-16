@@ -21,11 +21,11 @@
 
 				$offsetX = 2;
 				$offsetY = 5;
-			
+
 				$modelTitle = $this->model->get('title');
-			
+
 				$titleHeight = $pdf->GetStringHeight($modelTitle, $contentWidth);
-			
+
 				$pdf->SetFont('kozgopromedium', 'B');
 				$pdf->SetFontSize(24);
 				$pdf->MultiCell($headerFrame->w, $titleHeight, $modelTitle, 0, 'C', 0, 1, $headerFrame->x+$offsetX,
@@ -35,7 +35,7 @@
 				$modelColumns = $this->model->get('columns');
 
 				// Column 1
-				$pdf->SetY($headerFrame->y);
+//				$pdf->SetY($headerFrame->y);
 				$offsetY = 2;
 
 				$modelColumnLeft = $modelColumns[0];
@@ -58,7 +58,8 @@
 				$pdf->SetFont('kozgopromedium', 'B');
 				$contentHeight = $pdf->GetStringHeight( $modelColumnLeft['summary'], $headerColumnWidth);
 				$pdf->MultiCell($headerColumnWidth*1.5, $contentHeight, $modelColumnLeft['summary'], 0, 'L', 0, 1,
-					$headerFrame->x, $headerFrame->y+$offsetY);
+					$headerFrame->x, $pdf->GetY());
+//					$headerFrame->x, $headerFrame->y+$offsetY);
 
 //				$pdf->SetFont('kozgopromedium', '');
 //				$contentHeight = $pdf->GetStringHeight( $modelColumnLeft['content'], $headerColumnWidth);
@@ -100,9 +101,9 @@
                                                 $headerFrame->y+$offsetY);
 
                                         $pdf->SetFont('kozgopromedium', '');
-                                        $pdf->MultiCell($headerColumnWidth*0.6, 7, $value, 1, 'C', 0, 1, $headerFrame->x+$offsetX, 
+                                        $pdf->MultiCell($headerColumnWidth*0.6, 7, $value, 1, 'C', 0, 1, $headerFrame->x+$offsetX,
                                                 $pdf->GetY());
-					$offsetX += $headerColumnWidth*0.6; 
+					$offsetX += $headerColumnWidth*0.6;
                                         }
                                 }
 /***
@@ -162,7 +163,7 @@
 
 				$pdf->SetFont('kozgopromedium', '');
 				foreach($modelColumnRight['dates'] as $l => $v) {
-					$pdf->MultiCell($headerColumnWidth-$offsetX, 7, sprintf('%s: %s', $l, $v), 0, 'R', 0, 1, 
+					$pdf->MultiCell($headerColumnWidth-$offsetX, 7, sprintf('%s: %s', $l, $v), 0, 'R', 0, 1,
 						$headerFrame->x+$headerColumnWidth*2.0+$offsetX, $pdf->GetY()+$offsetY);
 					$offsetY = 0;
 				}

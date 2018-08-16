@@ -44,17 +44,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
 		return $modelTitle;
 	}
-/***
-	function buildHeaderModelTitle() {
-		$singularModuleNameKey = 'SINGLE_'.$this->moduleName;
-		$translatedSingularModuleLabel = getTranslatedString($singularModuleNameKey, $this->moduleName);
-		if($translatedSingularModuleLabel == $singularModuleNameKey) {
-			$translatedSingularModuleLabel = getTranslatedString($this->moduleName, $this->moduleName);
-		}
-//		return sprintf("%s: %s", $translatedSingularModuleLabel, $this->focusColumnValue('salesorder_no'));
-		return sprintf("%s", '御注文確認書');
-	}
-***/
+
 	function getHeaderViewer() {
 		$headerViewer = new SalesOrderPDFHeaderViewer();
 		$headerViewer->setModel($this->buildHeaderModel());
