@@ -90,10 +90,21 @@
 
 				// Column 2
 				$offsetX = 5;
-				$pdf->SetY($headerFrame->y);
+				$pdf->SetY($headerFrame->y + $titleHeight);
 
 				$modelColumnCenter = $modelColumns[1];
 
+				// Subject
+				$offsetY = 0;
+				foreach($modelColumnCenter as $label => $value) {
+
+					if(!empty($value)) {
+						$pdf->SetFont('kozgopromedium', '');
+						$pdf->MultiCell($headerColumnWidth*2.0-$offsetX, 7, '('.$label.'： '.$value.')', 1, 'C', 0, 1, $headerFrame->x+$headerColumnWidth*0.5+$offsetX, $pdf->GetY()+$offsetY);
+//						$offsetY = 2;
+					}
+				}
+/***
 				$offsetY = 8;
 				foreach($modelColumnCenter as $label => $value) {
 
@@ -107,6 +118,7 @@
 						$offsetY = 2;
 					}
 				}
+***/
 
 				// Column 3
 				$pdf->SetY($headerFrame->y);
