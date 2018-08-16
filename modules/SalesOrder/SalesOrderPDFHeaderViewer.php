@@ -57,10 +57,10 @@
 //				$offsetY = $titleHeight+5;
 				$offsetY = 0;
 				$pdf->SetFont('kozgopromedium', 'B');
-				$contentHeight = $pdf->GetStringHeight( $modelColumnLeft['company'], $headerColumnWidth*1.5);
-				$pdf->MultiCell($headerColumnWidth*1.5, $contentHeight, $modelColumnLeft['company'], 0, 'L', 0, 1,
+				$contentHeight = $pdf->GetStringHeight( $modelColumnLeft['customer'], $headerColumnWidth*1.5);
+				$pdf->MultiCell($headerColumnWidth*1.5, $contentHeight, $modelColumnLeft['customer'], 0, 'L', 0, 1,
 					$headerFrame->x, $pdf->GetY());
-				$pdf->MultiCell($headerColumnWidth*1.5, 7, $modelColumnLeft['contactname'], 0, 'C', 0, 1,
+				$pdf->MultiCell($headerColumnWidth*1.5, 7, $modelColumnLeft['address'], 0, 'C', 0, 1,
 					$headerFrame->x, $pdf->GetY());
 //					$headerFrame->x, $headerFrame->y+$offsetY);
 
@@ -70,7 +70,7 @@
 //					$headerFrame->x, $pdf->GetY());
 
 				$offsetY = 0;
-        foreach($modelColumnLeft['address'] as $label => $value) {
+        foreach($modelColumnLeft['fieldvalue'] as $label => $value) {
           if(is_array($value)) {
             $pdf->SetFont('kozgopromedium', '');
             foreach($value as $l => $v) {
