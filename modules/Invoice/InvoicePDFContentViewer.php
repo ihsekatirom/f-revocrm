@@ -164,7 +164,7 @@ class InvoicePDFContentViewer extends Vtiger_PDF_InventoryContentViewer {
 			}
 
 			$summaryLineX = $contentLineX + $this->cells['Code'] + $this->cells['Name'];
-			$summaryLineY = ($contentFrame->h+$contentFrame->y-$this->headerRowHeight)-$summaryTotalHeight+$cellOffsetY;
+			$summaryLineY = ($contentFrame->h+$contentFrame->y-$this->headerRowHeight)-$summaryTotalHeight;
 
 			foreach($summaryCellKeys as $key) {
 				$pdf->MultiCell($summaryCellLabelWidth, $summaryCellHeight, $key, 1, 'L', 0, 1, $summaryLineX, $summaryLineY);
