@@ -22,8 +22,8 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 					$this->footerDescription = '　';
 					$pdfgenerator->setPagerViewer($this->getPagerViewer());
 					$pdfgenerator->setHeaderViewer($this->getHeaderViewer());
-					$pdfgenerator->setFooterViewer($this->getFooterViewer());
 					$pdfgenerator->setContentViewer($this->getContentViewer());
+					$pdfgenerator->setFooterViewer($this->getFooterViewer());
 
 					$pdfgenerator->generate($filename, $type);
 	}
@@ -63,9 +63,10 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		$shippingAddressLabel = getTranslatedString('Shipping Address', $this->moduleName);
 
 		$modelColumn0 = array(
-				'summary'	       =>      $customerName.' 御中',
-				'content'	       =>      array(
-						'contactname'   => array('ご担当者' => $contactName.' 様'),
+				'company'	       =>      $customerName.' 御中',
+				'contactname'    =>      $contactName.' 様',
+				'address'	       =>      array(
+//						'contactname'   => array('ご担当者' => $contactName.' 様'),
 						'請求先住所'  => $this->buildHeaderBillingAddress(),
 						'納品先住所'  => $this->buildHeaderShippingAddress(),
 				),
