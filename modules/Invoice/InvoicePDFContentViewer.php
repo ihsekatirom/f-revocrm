@@ -11,7 +11,7 @@ include_once 'vtlib/Vtiger/PDF/inventory/ContentViewer.php';
 
 class InvoicePDFContentViewer extends Vtiger_PDF_InventoryContentViewer {
 
-	protected $headerRowHeight = 12;
+	protected $headerRowHeight = 13;
 	protected $onSummaryPage   = false;
 
 	function __construct() {
@@ -114,7 +114,7 @@ class InvoicePDFContentViewer extends Vtiger_PDF_InventoryContentViewer {
 			$offsetX = 0;
 			foreach($this->cells as $cellName => $cellWidth) {
 				$cellPosition = ($cellName == 'Code' || $cellName == 'Name')? 'L' : 'R';
-				$pdf->MultiCell($cellWidth, $contentHeight, $model->get($cellName), 0, $cellPosition, 0, 1, $contentLineX+$offsetX, $contentLineY);
+				$pdf->MultiCell($cellWidth, $contentHeight, $model->get($cellName), 1, $cellPosition, 0, 1, $contentLineX+$offsetX, $contentLineY);
 				$offsetX += $cellWidth;
 			}
 
@@ -145,6 +145,7 @@ class InvoicePDFContentViewer extends Vtiger_PDF_InventoryContentViewer {
 
 		// Summary
 		$cellHeights = array();
+		$cellOffsetY = 2;
 
 		if ($this->contentSummaryModel) {
 			$summaryCellKeys = $this->contentSummaryModel->keys(); $summaryCellCount = count($summaryCellKeys);
@@ -163,7 +164,7 @@ class InvoicePDFContentViewer extends Vtiger_PDF_InventoryContentViewer {
 			}
 
 			$summaryLineX = $contentLineX + $this->cells['Code'] + $this->cells['Name'];
-			$summaryLineY = ($contentFrame->h+$contentFrame->y-$this->headerRowHeight)-$summaryTotalHeight;
+			$summaryLineY = ($contentFrame->h+$contentFrame->y-$this->headerRowHeight)-$summaryTotalHeight+$cellOffsetY;
 
 			foreach($summaryCellKeys as $key) {
 				$pdf->MultiCell($summaryCellLabelWidth, $summaryCellHeight, $key, 1, 'L', 0, 1, $summaryLineX, $summaryLineY);
