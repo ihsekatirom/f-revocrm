@@ -9,7 +9,42 @@
  ************************************************************************************/
 include_once 'include/InventoryPDFController.php';
 include_once dirname(__FILE__). '/SalesOrderPDFHeaderViewer.php';
+
 class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
+
+	function Output($filename, $type) {
+					if(is_null($this->focus)) return;
+
+					$pdfgenerator = $this->getPDFGenerator();
+
+					$this->headerTitleLabel = '御注文確認書';
+//					$this->headerDescription = '';
+					$this->footerDescription = '　';
+					$pdfgenerator->setPagerViewer($this->getPagerViewer());
+					$pdfgenerator->setHeaderViewer($this->getHeaderViewer());
+					$pdfgenerator->setFooterViewer($this->getFooterViewer());
+					$pdfgenerator->setContentViewer($this->getContentViewer());
+
+					$pdfgenerator->generate($filename, $type);
+	}
+
+	function buildHeaderModelTitle() {
+		$singularModuleNameKey = 'SINGLE_'.$this->moduleName;
+		$translatedSingularModuleLabel = getTranslatedString($singularModuleNameKey, $this->moduleName);
+		if($translatedSingularModuleLabel == $singularModuleNameKey) {
+			$translatedSingularModuleLabel = getTranslatedString($this->moduleName, $this->moduleName);
+		}
+/***
+		$modelTitle = array(
+						  'title'	       =>      sprintf("%s", $this->headerTitleLabel),
+		          'description'	 =>      sprintf("%s", $this->headerDescription),
+			);
+***/
+		$modelTitle = sprintf("%s", $this->headerTitleLabel);
+
+		return $modelTitle;
+	}
+/***
 	function buildHeaderModelTitle() {
 		$singularModuleNameKey = 'SINGLE_'.$this->moduleName;
 		$translatedSingularModuleLabel = getTranslatedString($singularModuleNameKey, $this->moduleName);
@@ -17,15 +52,15 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 			$translatedSingularModuleLabel = getTranslatedString($this->moduleName, $this->moduleName);
 		}
 //		return sprintf("%s: %s", $translatedSingularModuleLabel, $this->focusColumnValue('salesorder_no'));
-		return sprintf("%s", '御見積書');
+		return sprintf("%s", '御注文確認書');
 	}
-
+***/
 	function getHeaderViewer() {
 		$headerViewer = new SalesOrderPDFHeaderViewer();
 		$headerViewer->setModel($this->buildHeaderModel());
 		return $headerViewer;
 	}
-	
+
 //	function buildHeaderModelColumnLeft() {
 //		$modelColumnLeft = parent::buildHeaderModelColumnLeft();
 //		return $modelColumnLeft;
@@ -45,7 +80,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 						'納品先住所'  => $this->buildHeaderShippingAddress(),
 				),
 				'fieldvalue'	    =>      array(
-						'受注No.'       => '', 
+						'受注No.'       => '',
 						'指図No.'       => 147619,
 						'メーカーNo.'   => 2512823,
 						'発注日'	=> '2018-05-16',
@@ -54,14 +89,14 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 			);
 		return $modelColumn0;
 	}
-	
+
 	function buildHeaderModelColumnCenter() {
 		$subject = $this->focusColumnValue('subject');
 		$customerName = $this->resolveReferenceLabel($this->focusColumnValue('account_id'), 'Accounts');
 		$contactName = $this->resolveReferenceLabel($this->focusColumnValue('contact_id'), 'Contacts');
 		$purchaseOrder = $this->focusColumnValue('vtiger_purchaseorder');
 		$quoteName = $this->resolveReferenceLabel($this->focusColumnValue('quote_id'), 'Quotes');
-		
+
 		$subjectLabel = getTranslatedString('Subject', $this->moduleName);
 	$quoteNameLabel = getTranslatedString('Quote Name', $this->moduleName);
 		$customerNameLabel = getTranslatedString('Customer Name', $this->moduleName);
@@ -123,7 +158,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
 			$issueDateLabel = getTranslatedString('Issued Date', $this->moduleName);
 			$validDateLabel = getTranslatedString('Due Date', $this->moduleName);
-	
+
 //					      $validDateLabel => $this->formatDate($this->focusColumnValue('duedate')),
 			$modelColumn2 = array(
 					'dates' => array(
