@@ -181,12 +181,13 @@
 					$offsetY = 0;
 				}
 ***/
+/***
 				if(!empty($modelColumnRight['dates'] )) {
 					$pdf->SetFont('kozgopromedium', '');
 					$pdf->MultiCell($headerColumnWidth-$offsetX, 7, $modelColumnRight['dates'], 0, 'R', 0, 1,
 						$headerFrame->x+$headerColumnWidth*2.0+$offsetX, $pdf->GetY()+$offsetY);
 				}
-
+***/
 				if($pdf->GetY() < $titleHeight) {
 					$pdf->SetY($titleHeight);
 				}
