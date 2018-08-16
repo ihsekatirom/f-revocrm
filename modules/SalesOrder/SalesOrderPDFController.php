@@ -153,7 +153,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 			$validDateLabel = getTranslatedString('Due Date', $this->moduleName);
 
 //					      $validDateLabel => $this->formatDate($this->focusColumnValue('duedate')),
-			$printInfo	= joinValues(array($issueDateLabel.$this->formatDate(date("Y-m-d")),'受注注文番号：'.$this->focusColumnValue('salesorder_no')));
+//			$printInfo	= joinValues(array($issueDateLabel.$this->formatDate(date("Y-m-d")),'受注注文番号：'.$this->focusColumnValue('salesorder_no')));
 
 			/***
 									$issueDateLabel  => $this->formatDate(date("Y-m-d")),
@@ -162,7 +162,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 			***/
 
 			$modelColumn2 = array(
-				'dates' => decode_html($printInfo),
+//				'dates' => decode_html($printInfo),
 				'summary' => decode_html($resultrow['organizationname']),
 				'content' => decode_html($this->joinValues($addressValues, ' '). $this->joinValues($additionalCompanyInfo, ' '))
 				);
