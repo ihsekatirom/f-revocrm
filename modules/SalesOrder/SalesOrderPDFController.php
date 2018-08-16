@@ -28,6 +28,163 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 					$pdfgenerator->generate($filename, $type);
 	}
 
+	// Helper methods
+
+	function buildContentModels() {
+		$associated_products = $this->associated_products;
+		$contentModels = array();
+		$productLineItemIndex = 0;
+		$totaltaxes = 0;
+		$no_of_decimal_places = getCurrencyDecimalPlaces();
+		foreach($associated_products as $productLineItem) {
+			++$productLineItemIndex;
+
+			$contentModel = new Vtiger_PDF_Model();
+
+			$discountPercentage  = 0.00;
+			$total_tax_percent = 0.00;
+			$producttotal_taxes = 0.00;
+//			$quantity = ''; $listPrice = ''; $discount = ''; $taxable_total = '';
+			$quantity = ''; $listPrice = ''; $unitPrice = ''; $discount = ''; $taxable_total = ''; $unitPrice_total = '';
+			$tax_amount = ''; $producttotal = '';
+			$productCode = '';
+
+
+			$quantity	= $productLineItem["qty{$productLineItemIndex}"];
+			$listPrice	= $productLineItem["listPrice{$productLineItemIndex}"];
+			$unitPrice	= $productLineItem["unitPrice{$productLineItemIndex}"];
+			$discount	= $productLineItem["discountTotal{$productLineItemIndex}"];
+			$taxable_total = $quantity * $listPrice - $discount;
+			$taxable_total = number_format($taxable_total, $no_of_decimal_places,'.','');
+			$unitPrice_total = $quantity * $unitPrice - $discount;
+			$unitPrice_total = number_format($unitPrice_total, $no_of_decimal_places,'.','');
+			$producttotal = $taxable_total;
+			if($this->focus->column_fields["hdnTaxType"] == "individual") {
+				for($tax_count=0;$tax_count<count($productLineItem['taxes']);$tax_count++) {
+					$tax_percent = $productLineItem['taxes'][$tax_count]['percentage'];
+					$total_tax_percent += $tax_percent;
+					$tax_amount = (($taxable_total*$tax_percent)/100);
+					$producttotal_taxes += $tax_amount;
+				}
+			}
+
+			$producttotal_taxes = number_format($producttotal_taxes, $no_of_decimal_places,'.','');
+			$producttotal = $taxable_total+$producttotal_taxes;
+			$producttotal = number_format($producttotal, $no_of_decimal_places,'.','');
+			$tax = $producttotal_taxes;
+			$totaltaxes += $tax;
+			$totaltaxes = number_format($totaltaxes, $no_of_decimal_places,'.','');
+			$discountPercentage = $productLineItem["discount_percent{$productLineItemIndex}"];
+			$productName = decode_html($productLineItem["productName{$productLineItemIndex}"]);
+			//get the sub product
+			$subProducts = $productLineItem["subProductArray{$productLineItemIndex}"];
+			if($subProducts != '') {
+				foreach($subProducts as $subProduct) {
+					$productName .="\n"." - ".decode_html($subProduct);
+				}
+			}
+			$contentModel->set('Name', $productName);
+//			$contentModel->set('Code', decode_html($productLineItem["hdnProductcode{$productLineItemIndex}"]));
+			$contentModel->set('Code', decode_html($productLineItem["Productcode{$productLineItemIndex}"]));
+			$contentModel->set('Quantity', $quantity);
+			$contentModel->set('Price',     $this->formatPrice($listPrice)."\n(".$this->formatPrice($unitPrice).")");
+			$contentModel->set('Discount',  $this->formatPrice($discount)."\n ($discountPercentage%)");
+//			$contentModel->set('Discount',  "$discountPercentage%");
+			$contentModel->set('Tax',       $this->formatPrice($tax)."\n ($total_tax_percent%)");
+			$contentModel->set('Total',     $this->formatPrice($producttotal)."\n(".$this->formatPrice($unitPrice_total).")");
+			$contentModel->set('Comment',   decode_html($productLineItem["comment{$productLineItemIndex}"]));
+
+			$contentModels[] = $contentModel;
+		}
+		$this->totaltaxes = $totaltaxes; //will be used to add it to the net total
+
+		return $contentModels;
+	}
+
+	function buildContentLabelModel() {
+		$labelModel = new Vtiger_PDF_Model();
+		$labelModel->set('Code',      "\n".getTranslatedString('Product Code',$this->moduleName));
+		$labelModel->set('Name',      "\n".getTranslatedString('Product Name',$this->moduleName).'・規格');
+		$labelModel->set('Quantity',  "\n".getTranslatedString('Quantity',$this->moduleName));
+//		$labelModel->set('Price',     getTranslatedString('LBL_LIST_PRICE',$this->moduleName));
+		$labelModel->set('Price',     getTranslatedString('LBL_LIST_PRICE',$this->moduleName)."\n(原価)");
+//		$labelModel->set('Price',     "売価単価"."\n(原価単価)");
+		$labelModel->set('Discount',  "\n".getTranslatedString('Discount',$this->moduleName));
+		$labelModel->set('Tax',       "\n".getTranslatedString('Tax',$this->moduleName));
+//		$labelModel->set('Total',     getTranslatedString('Total',$this->moduleName));
+		$labelModel->set('Total',     getTranslatedString('Total',$this->moduleName)."\n(原価合計)");
+//		$labelModel->set('Total',     "売価金額"."\n(原価金額)");
+		$labelModel->set('Comment',   getTranslatedString('Comment'),$this->moduleName);
+		return $labelModel;
+	}
+
+	function buildSummaryModel() {
+		$associated_products = $this->associated_products;
+		$final_details = $associated_products[1]['final_details'];
+
+		$summaryModel = new Vtiger_PDF_Model();
+
+		$netTotal = $discount = $handlingCharges =  $handlingTaxes = 0;
+		$adjustment = $grandTotal = 0;
+
+		$productLineItemIndex = 0;
+		$sh_tax_percent = 0;
+		foreach($associated_products as $productLineItem) {
+			++$productLineItemIndex;
+			$netTotal += $productLineItem["netPrice{$productLineItemIndex}"];
+		}
+		$netTotal = number_format(($netTotal + $this->totaltaxes), getCurrencyDecimalPlaces(),'.', '');
+		$summaryModel->set(getTranslatedString("Net Total", $this->moduleName), $this->formatPrice($netTotal));
+
+		$discount_amount = $final_details["discount_amount_final"];
+		$discount_percent = $final_details["discount_percentage_final"];
+
+		$discount = 0.0;
+        $discount_final_percent = '0.00';
+		if($final_details['discount_type_final'] == 'amount') {
+			$discount = $discount_amount;
+		} else if($final_details['discount_type_final'] == 'percentage') {
+            $discount_final_percent = $discount_percent;
+			$discount = (($discount_percent*$final_details["hdnSubTotal"])/100);
+		}
+		$summaryModel->set(getTranslatedString("Discount", $this->moduleName)."($discount_final_percent%)", $this->formatPrice($discount));
+
+		$group_total_tax_percent = '0.00';
+		//To calculate the group tax amount
+		if($final_details['taxtype'] == 'group') {
+			$group_tax_details = $final_details['taxes'];
+			for($i=0;$i<count($group_tax_details);$i++) {
+				$group_total_tax_percent += $group_tax_details[$i]['percentage'];
+			}
+			$summaryModel->set(getTranslatedString("Tax:", $this->moduleName)."($group_total_tax_percent%)", $this->formatPrice($final_details['tax_totalamount']));
+		}
+		//Shipping & Handling taxes
+		$sh_tax_details = $final_details['sh_taxes'];
+		for($i=0;$i<count($sh_tax_details);$i++) {
+			$sh_tax_percent = $sh_tax_percent + $sh_tax_details[$i]['percentage'];
+		}
+		//obtain the Currency Symbol
+//		$currencySymbol = $this->buildCurrencySymbol();
+
+		$summaryModel->set(getTranslatedString("Shipping & Handling Charges", $this->moduleName), $this->formatPrice($final_details['shipping_handling_charge']));
+		$summaryModel->set(getTranslatedString("Shipping & Handling Tax:", $this->moduleName)."($sh_tax_percent%)", $this->formatPrice($final_details['shtax_totalamount']));
+		$summaryModel->set(getTranslatedString("Adjustment", $this->moduleName), $this->formatPrice($final_details['adjustment']));
+		$summaryModel->set(getTranslatedString("Grand Total:", $this->moduleName), $this->formatPrice($final_details['grandTotal']));
+
+		if ($this->moduleName == 'Invoice') {
+			$receivedVal = $this->focusColumnValue("received");
+			if (!$receivedVal) {
+				$this->focus->column_fields["received"] = 0;
+			}
+			//If Received value is exist then only Recieved, Balance details should present in PDF
+			if ($this->formatPrice($this->focusColumnValue("received")) > 0) {
+				$summaryModel->set(getTranslatedString("Received", $this->moduleName), $this->formatPrice($this->focusColumnValue("received")));
+				$summaryModel->set(getTranslatedString("Balance", $this->moduleName), $this->formatPrice($this->focusColumnValue("balance")));
+			}
+		}
+		return $summaryModel;
+	}
+
 	function buildHeaderModelTitle() {
 		$singularModuleNameKey = 'SINGLE_'.$this->moduleName;
 		$translatedSingularModuleLabel = getTranslatedString($singularModuleNameKey, $this->moduleName);
@@ -215,6 +372,12 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
 			return $this->joinValues($additionalContactInfo);
 		}
+	}
+
+	function formatPrice($value, $decimal=2) {
+		$currencyField = new CurrencyField($value);
+
+		return decode_html($currencyField->getDisplayValueWithSymbol(null, true));
 	}
 }
 ?>
