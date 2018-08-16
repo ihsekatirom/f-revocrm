@@ -73,11 +73,11 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 				'customer'			=>      $CustomerInfo,
 				'contact'	      =>      $additionalContactInfo,
 				'fieldvalue'	    =>      array(
-						'受注No.'       => '',
-						'指図No.'       => 147619,
+						'受注No.'       => $this->focusColumnValue('salesorder_no'),
+						'指図No.'       => $this->focusColumnValue('customerno'),
 						'メーカーNo.'   => 2512823,
-						'発注日'	=> '2018-05-16',
-						'納品予定日'	=> '2018-07-6'
+						'発注日'	=> $this->focusColumnValue('cf_763'),
+						'納品予定日'	=> $this->focusColumnValue('duedate')
 				)
 			);
 		return $modelColumn0;
@@ -155,17 +155,10 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 //					      $validDateLabel => $this->formatDate($this->focusColumnValue('duedate')),
 			$printInfo = array();
 			if(!empty($resultrow['phone']))	 $printInfo[]= $issueDateLabel.'：'. $this->formatDate(date("Y-m-d"));
-			if(!empty($this->focusColumnValue('salesorder_no'))) $printInfo[]= '受注注文番号：'. $this->focusColumnValue('salesorder_no');
-//			$printInfo	= joinValues($printInfo);
-
-			/***
-									$issueDateLabel  => $this->formatDate(date("Y-m-d")),
-									'販売受注番号'  => $this->focusColumnValue('salesorder_no'),
-								),
-			***/
+			if(!empty($this->focusColumnValue('salesorder_no'))) $printInfo[]= '販売受注番号：'. $this->focusColumnValue('salesorder_no');
 
 			$modelColumn2 = array(
-				'dates' => decode_html($this->joinValues($printInfo)),
+				'print_date' => decode_html($this->joinValues($printInfo)),
 				'summary' => decode_html($resultrow['organizationname']),
 				'content' => decode_html($this->joinValues($addressValues, ' '). $this->joinValues($additionalCompanyInfo, ' '))
 				);

@@ -19,7 +19,6 @@
 				$headerColumnWidth = $headerFrame->w/3.0;
 
 				// Title
-
 				$offsetX = 2;
 				$offsetY = 0;
 
@@ -33,6 +32,7 @@
 				$headerFrame->y+$offsetY);
 				$pdf->SetFontSize(12);
 
+				// Column
 				$modelColumns = $this->model->get('columns');
 
 				// Column 1
@@ -54,7 +54,8 @@
 //				$pdf->Image($modelColumnLeft['logo'], $headerFrame->x, $headerFrame->y, $w, $h);
 //				$imageHeightInMM = 30;
 
-//				$offsetY = $titleHeight+5;
+
+				// Address(Costomer Info)
 				$offsetY = 0;
 				$pdf->SetFont('kozgopromedium', 'B');
 				$contentHeight = $pdf->GetStringHeight( $modelColumnLeft['customer'], $headerColumnWidth*1.5);
@@ -66,52 +67,19 @@
 				$pdf->MultiCell($headerColumnWidth*2, 7, $modelColumnLeft['contact'], 0, 'L', 0, 1,
 					$headerFrame->x, $pdf->GetY());
 				$pdf->SetFontSize(12);
-//					$headerFrame->x, $headerFrame->y+$offsetY);
 
-//				$pdf->SetFont('kozgopromedium', '');
-//				$contentHeight = $pdf->GetStringHeight( $modelColumnLeft['content'], $headerColumnWidth);
-//				$pdf->MultiCell($headerColumnWidth, $contentHeight, $modelColumnLeft['content'], 0, 'L', 0, 1,
-//					$headerFrame->x, $pdf->GetY());
 
-/***
-				$offsetY = 0;
-        foreach($modelColumnLeft['fieldvalue'] as $label => $value) {
-          if(is_array($value)) {
-            $pdf->SetFont('kozgopromedium', '');
-            foreach($value as $l => $v) {
-              $pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, sprintf('%s: %s', $l, $v), 0, 'C', 0, 1,
-	               $headerFrame->x, $pdf->GetY()+$offsetY);
-              $offsetY = 0;
-            }
-          } else {
-
-            $offsetY = 1;
-
-            $pdf->SetFont('kozgopromedium', 'B');
-//          $pdf->SetFillColor(205,201,201);
-            $pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, $label, 0, 'L', 0, 1, $headerFrame->x,
-              $pdf->GetY()+$offsetY);
-
-            $pdf->SetFont('kozgopromedium', '');
-            $pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, $value, 0, 'L', 0, 1, $headerFrame->x,
-              $pdf->GetY());
-          }
-        }
-***/
+				// Order Info
 				$offsetX = 0;
-//				$fieldColumnY = $pdf->GetY();
 				$fieldColumnY = $headerFrame->h - 7;
-//				$offsetY = $pdf->GetY();
 
         foreach($modelColumnLeft['fieldvalue'] as $label => $value) {
           if(! is_array($value)) {
 
-//						$pdf->SetY($fieldColumnY);
             $pdf->SetFont('kozgopromedium', 'B');
             $pdf->SetFillColor(205,201,201);
             $pdf->MultiCell($headerColumnWidth*0.6, 7, $label, 1, 'C', 1, 1, $headerFrame->x+$offsetX,
               $fieldColumnY);
-//							$headerFrame->y+$offsetY);
 
             $pdf->SetFont('kozgopromedium', '');
             $pdf->MultiCell($headerColumnWidth*0.6, 7, $value, 1, 'C', 0, 1, $headerFrame->x+$offsetX,
@@ -119,18 +87,6 @@
 						$offsetX += $headerColumnWidth*0.6;
           }
         }
-/***
-				if(!empty($modelColumnLeft['fieldvalue'])) {
-					$pdf->SetFont('kozgopromedium', 'B');
-					$pdf->SetFillColor(205,201,201);
-					$height = $pdf->GetStringHeight($modelColumnLeft['fieldlabel'], $headerColumnWidth);
-					$pdf->MultiCell($headerColumnWidth, 7, $modelColumnLeft['fieldlabel'], 1, 'C', 1, 1, $headerFrame->x, $pdf->GetY()+2);
-
-					$pdf->SetFont('kozgopromedium', '');
-					$height = $pdf->GetStringHeight($modelColumnLeft['fieldvalue'], $headerColumnWidth);
-					$pdf->MultiCell($headerColumnWidth, 7, $modelColumnLeft['fieldvalue'], 1, 'C', 0, 1, $headerFrame->x, $pdf->GetY());
-				}
-***/
 
 				// Column 2
 				$offsetX = 5;
@@ -172,55 +128,20 @@
 				$pdf->MultiCell($contentWidth*2.0, $contentHeight, $this->model->get('title'), 0, 'R', 0, 1, $contentX-$contentWidth,
 					 $headerFrame->y+2);
 **/
-
 /***
-				$pdf->SetFont('kozgopromedium', '');
-				foreach($modelColumnRight['dates'] as $l => $v) {
-					$pdf->MultiCell($headerColumnWidth-$offsetX, 7, sprintf('%s: %s', $l, $v), 0, 'R', 0, 1,
-						$headerFrame->x+$headerColumnWidth*2.0+$offsetX, $pdf->GetY()+$offsetY);
-					$offsetY = 0;
-				}
-***/
-/***
-				if(!empty($modelColumnRight['dates'] )) {
-					$pdf->SetFont('kozgopromedium', '');
-					$pdf->MultiCell($headerColumnWidth-$offsetX, 7, $modelColumnRight['dates'], 0, 'R', 0, 1,
-						$headerFrame->x+$headerColumnWidth*2.0+$offsetX, $pdf->GetY()+$offsetY);
-				}
-***/
 				if($pdf->GetY() < $titleHeight) {
 					$pdf->SetY($titleHeight);
 				}
-
+***/
+				// Printed Info and Sender Info
 				$offsetY = 0;
 
 				foreach($modelColumnRight as $label => $value) {
-/***
-					if($label == 'dates') {
-						$pdf->SetFont('kozgopromedium', '');
-						$pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, $modelColumnRight['dates'], 0, 'R', 0, 1,
-							$headerFrame->x+$headerColumnWidth*1.5+$offsetX, $pdf->GetY()+$offsetY);
-						continue;
-					} else if(is_array($value)) {
-						$pdf->SetFont('kozgopromedium', '');
-						foreach($value as $l => $v) {
-							$pdf->MultiCell($headerColumnWidth-$offsetX, 7, sprintf('%s: %s', $l, $v), 0, 'R', 0, 1,
-								$headerFrame->x+$headerColumnWidth*2.0+$offsetX, $pdf->GetY()+$offsetY);
-							$offsetY = 0;
-						}
-					} else {
-***/
-//					$pdf->SetFont('kozgopromedium', 'B');
-//					$pdf->SetFillColor(205,201,201);
-//					$pdf->MultiCell($headerColumnWidth-$offsetX, 7, $label, 0, 'L', 1, 1, $headerFrame->x+$headerColumnWidth*2.0+$offsetX,
-//						$pdf->GetY()+$offsetY);
 					$fontInpact = ($label == 'summary') ? 'B' : '';
 					$pdf->SetFont('kozgopromedium', $fontInpact);
 					$pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, $value, 0, 'R', 0, 1, $headerFrame->x+$headerColumnWidth*1.5+$offsetX,
 						$pdf->GetY()+$offsetY);
-
-						$offsetY = 1;
-//					}
+					$offsetY = 1;
 				}
 				$pdf->setFont('kozgopromedium', '');
 
