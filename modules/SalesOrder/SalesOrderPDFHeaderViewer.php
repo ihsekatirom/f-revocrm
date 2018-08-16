@@ -36,7 +36,8 @@
 				$modelColumns = $this->model->get('columns');
 
 				// Column 1
-//				$pdf->SetY($headerFrame->y);
+				$pdf->SetY($headerFrame->y);
+
 				$offsetY = 2;
 
 				$modelColumnLeft = $modelColumns[0];
@@ -69,6 +70,15 @@
 				$pdf->SetFontSize(12);
 
 
+				// Subject
+				foreach($modelColumnLeft['summary'] as $label => $value) {
+          if(! is_array($value)) {
+
+						$pdf->SetFont('kozgopromedium', '');
+						$pdf->MultiCell($headerColumnWidth*2.0-$offsetX, 7, '('.$label.'： '.$value.')', 1, 'C', 0, 1, $headerFrame->x+$offsetX, $pdf->GetY()+$offsetY);
+          }
+        }
+
 				// Order Info
 				$offsetX = 0;
 				$fieldColumnY = $headerFrame->h - 7;
@@ -94,16 +104,6 @@
 
 				$modelColumnCenter = $modelColumns[1];
 
-				// Subject
-				$offsetY = 0;
-				foreach($modelColumnCenter as $label => $value) {
-
-					if(!empty($value)) {
-						$pdf->SetFont('kozgopromedium', '');
-						$pdf->MultiCell($headerColumnWidth*2.0-$offsetX, 7, '('.$label.'： '.$value.')', 1, 'C', 0, 1, $headerFrame->x+$headerColumnWidth*0.5+$offsetX, $pdf->GetY()+$offsetY);
-//						$offsetY = 2;
-					}
-				}
 /***
 				$offsetY = 8;
 				foreach($modelColumnCenter as $label => $value) {

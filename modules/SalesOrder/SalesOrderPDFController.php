@@ -72,6 +72,9 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		$modelColumn0 = array(
 				'customer'			=>      $CustomerInfo,
 				'contact'	      =>      $additionalContactInfo,
+				'summary'	    =>      array(
+						'件名'       => $this->focusColumnValue('subject')
+					),
 				'fieldvalue'	    =>      array(
 						'受注No.'       => $this->focusColumnValue('salesorder_no'),
 						'指図No.'       => $this->focusColumnValue('customerno'),
