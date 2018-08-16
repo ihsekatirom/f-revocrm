@@ -67,8 +67,8 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 				'contactname'    =>      $contactName.' 様',
 				'address'	       =>      array(
 //						'contactname'   => array('ご担当者' => $contactName.' 様'),
-						'請求先住所'  => $this->buildHeaderBillingAddress(),
-						'納品先住所'  => $this->buildHeaderShippingAddress(),
+						'請求先：'  => $this->buildHeaderBillingAddress(),
+						'納品先：'  => $this->buildHeaderShippingAddress(),
 				),
 				'fieldvalue'	    =>      array(
 						'受注No.'       => '',

@@ -93,15 +93,18 @@
         }
 
 				$offsetX = 0;
-				$offsetY = $pdf->GetY();
+				$fieldColumnY = $pdf->GetY();
+//				$offsetY = $pdf->GetY();
 
         foreach($modelColumnLeft['fieldvalue'] as $label => $value) {
           if(! is_array($value)) {
 
+//						$pdf->SetY($fieldColumnY);
             $pdf->SetFont('kozgopromedium', 'B');
             $pdf->SetFillColor(205,201,201);
             $pdf->MultiCell($headerColumnWidth*0.6, 7, $label, 1, 'C', 1, 1, $headerFrame->x+$offsetX,
-              $headerFrame->y+$offsetY);
+              $fieldColumnY);
+//							$headerFrame->y+$offsetY);
 
             $pdf->SetFont('kozgopromedium', '');
             $pdf->MultiCell($headerColumnWidth*0.6, 7, $value, 1, 'C', 0, 1, $headerFrame->x+$offsetX,
