@@ -206,7 +206,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 			if(!empty($resultrow['fax']))	   $additionalContactInfo[]= getTranslatedString("Fax: ", $this->moduleName). $resultrow['fax'];
 //			if(!empty($resultrow['email']))	 $additionalContactInfo[]= getTranslatedString("Mail: ", $this->moduleName). $resultrow['email'];
 
-			$this->joinValues($additionalCompanyInfo);
+			return $this->joinValues($additionalCompanyInfo);
 		}
 	}
 }
