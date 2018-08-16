@@ -145,7 +145,7 @@ class InvoicePDFContentViewer extends Vtiger_PDF_InventoryContentViewer {
 
 		// Summary
 		$cellHeights = array();
-		$cellOffsetY = 0;
+		$cellOffsetY = 1;
 
 		if ($this->contentSummaryModel) {
 			$summaryCellKeys = $this->contentSummaryModel->keys(); $summaryCellCount = count($summaryCellKeys);
