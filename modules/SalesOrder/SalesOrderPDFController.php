@@ -225,10 +225,15 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	}
 
 	function getFooterViewer() {
-		$footerViewer = new SalesOrderPDFFooterViewer();
-		$footerViewer->setModel($this->buildFooterModel());
+//		$footerViewer = new SalesOrderPDFFooterViewer();
+//		$footerViewer->setModel($this->buildFooterModel());
+
 //		$footerViewer->setLabelModel($this->buildFooterLabelModel());
 //    $footerViewer->setOnEveryPage();
+//		$footerViewer->setOnLastPage();
+		$footerViewer = new Vtiger_PDF_InventoryFooterViewer();
+		$footerViewer->setModel($this->buildFooterModel());
+		$footerViewer->setLabelModel($this->buildFooterLabelModel());
 //		$footerViewer->setOnLastPage();
 		return $footerViewer;
 	}
