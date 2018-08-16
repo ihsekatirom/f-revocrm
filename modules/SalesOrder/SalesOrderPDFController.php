@@ -66,10 +66,11 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		$billingAddress = $this->buildHeaderBillingAddress();
 		$shippingAddress = $this->buildHeaderShippingAddress();
 
+		$CustomerInfo	= decode_html($this->joinValues(array($customerName.' 御中', $contactName.' 様')));
 		$additionalContactInfo	= decode_html($this->joinValues(array($contactTel, $contactFax, '請求先：'.$billingAddress, '納品先：'.$shippingAddress)));
 
 		$modelColumn0 = array(
-				'customer'			=>      decode_html($customerName.' 御中'."\n".$contactName.' 様'),
+				'customer'			=>      $CustomerInfo,
 				'contact'	      =>      $additionalContactInfo,
 				'fieldvalue'	    =>      array(
 						'受注No.'       => '',

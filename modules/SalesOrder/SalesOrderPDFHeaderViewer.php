@@ -62,7 +62,7 @@
 					$headerFrame->x, $pdf->GetY());
 
 				$pdf->SetFont('kozgopromedium', '');
-				$pdf->SetFontSize(10);
+				$pdf->SetFontSize(12);
 				$pdf->MultiCell($headerColumnWidth*2, 7, $modelColumnLeft['contact'], 0, 'L', 0, 1,
 					$headerFrame->x, $pdf->GetY());
 				$pdf->SetFontSize(12);
@@ -99,7 +99,8 @@
         }
 ***/
 				$offsetX = 0;
-				$fieldColumnY = $pdf->GetY();
+//				$fieldColumnY = $pdf->GetY();
+				$fieldColumnY = $headerFrame->h - 7;
 //				$offsetY = $pdf->GetY();
 
         foreach($modelColumnLeft['fieldvalue'] as $label => $value) {
@@ -154,6 +155,7 @@
 				// Column 3
 				$pdf->SetY($headerFrame->y);
 				$offsetX = 10;
+				$offsetY = 0;
 
 				$modelColumnRight = $modelColumns[2];
 /**
@@ -170,8 +172,6 @@
 				$pdf->MultiCell($contentWidth*2.0, $contentHeight, $this->model->get('title'), 0, 'R', 0, 1, $contentX-$contentWidth,
 					 $headerFrame->y+2);
 **/
-
-				$offsetY = 2;
 
 				$pdf->SetFont('kozgopromedium', '');
 				foreach($modelColumnRight['dates'] as $l => $v) {
@@ -214,7 +214,7 @@
 
 				// Add the border cell at the end
 				// This is required to reset Y position for next write
-				$pdf->MultiCell($headerFrame->w, $headerFrame->h-$headerFrame->y, "", 0, 'L', 0, 1, $headerFrame->x, $headerFrame->y);
+				$pdf->MultiCell($headerFrame->w, $headerFrame->h-$headerFrame->y, "", 1, 'L', 0, 1, $headerFrame->x, $headerFrame->y);
 			}
 		}
 }
