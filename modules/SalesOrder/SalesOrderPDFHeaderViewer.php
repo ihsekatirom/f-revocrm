@@ -100,7 +100,7 @@
 ***/
 				$offsetX = 0;
 //				$fieldColumnY = $pdf->GetY();
-				$fieldColumnY = $headerFrame->h - 7*2;
+				$fieldColumnY = $headerFrame->h - 7;
 //				$offsetY = $pdf->GetY();
 
         foreach($modelColumnLeft['fieldvalue'] as $label => $value) {
@@ -202,8 +202,8 @@
 //					$pdf->SetFillColor(205,201,201);
 //					$pdf->MultiCell($headerColumnWidth-$offsetX, 7, $label, 0, 'L', 1, 1, $headerFrame->x+$headerColumnWidth*2.0+$offsetX,
 //						$pdf->GetY()+$offsetY);
-
-					$pdf->SetFont('kozgopromedium', '');
+					$fontInpact = ($label == 'summary') ? 'B' : '';
+					$pdf->SetFont('kozgopromedium', $fontInpact);
 					$pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, $value, 0, 'R', 0, 1, $headerFrame->x+$headerColumnWidth*1.5+$offsetX,
 						$pdf->GetY()+$offsetY);
 
