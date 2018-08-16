@@ -131,16 +131,16 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
 			if(!empty($resultrow['code'])) $addressValues[]= $resultrow['code'];
 //		      if(!empty($resultrow['country'])) $addressValues[]= "\n".$resultrow['country'];
-			if(!empty($resultrow['state'])) $addressValues[]= "\n".$resultrow['state'];
+			if(!empty($resultrow['state'])) $addressValues[]= $resultrow['state'];
 			if(!empty($resultrow['city'])) $addressValues[]= $resultrow['city'];
 			if(!empty($resultrow['address'])) $addressValues[] = $resultrow['address'];
 
 
 			$additionalCompanyInfo = array();
 			if(!empty($resultrow['phone']))	 $additionalCompanyInfo[]= "\n".getTranslatedString("Phone: ", $this->moduleName). $resultrow['phone'];
-			if(!empty($resultrow['fax']))	   $additionalCompanyInfo[]= "\n".getTranslatedString("Fax: ", $this->moduleName). $resultrow['fax'];
+			if(!empty($resultrow['fax']))	   $additionalCompanyInfo[]= "　".getTranslatedString("Fax: ", $this->moduleName). $resultrow['fax'];
 //			if(!empty($resultrow['website']))       $additionalCompanyInfo[]= "\n".getTranslatedString("Website: ", $this->moduleName). $resultrow['website'];
-			if(!empty($resultrow['vatid']))	 $additionalCompanyInfo[]= "\n".getTranslatedString("VAT ID: ", $this->moduleName). $resultrow['vatid'];
+//			if(!empty($resultrow['vatid']))	 $additionalCompanyInfo[]= "\n".getTranslatedString("VAT ID: ", $this->moduleName). $resultrow['vatid'];
 
 			$issueDateLabel = getTranslatedString('Issued Date', $this->moduleName);
 			$validDateLabel = getTranslatedString('Due Date', $this->moduleName);
