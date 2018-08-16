@@ -63,7 +63,7 @@
 
 				$pdf->SetFont('kozgopromedium', '');
 				$pdf->SetFontSize(10);
-				$pdf->MultiCell($headerColumnWidth*2, 7, $modelColumnLeft['address'], 0, 'L', 0, 1,
+				$pdf->MultiCell($headerColumnWidth*2, 7, $modelColumnLeft['contact'], 0, 'L', 0, 1,
 					$headerFrame->x, $pdf->GetY());
 				$pdf->SetFontSize(12);
 //					$headerFrame->x, $headerFrame->y+$offsetY);
