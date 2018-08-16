@@ -166,5 +166,27 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	function getWatermarkContent() {
 		return $this->focusColumnValue('sostatus');
 	}
+
+	function buildHeaderBillingAddress() {
+		$billPoBox	= $this->focusColumnValues(array('bill_pobox'));
+		$billCode	= $this->focusColumnValues(array('bill_code'));
+//		$billCountry	= $this->focusColumnValues(array('bill_country'));
+		$billState	= $this->focusColumnValues(array('bill_state'));
+		$billCity	= $this->focusColumnValues(array('bill_city'));
+		$billStreet	= $this->focusColumnValues(array('bill_street'));
+		$address	= $this->joinValues(array($billCode, $billState, $billCity, $billStreet), ' ');
+		return $address;
+	}
+
+	function buildHeaderShippingAddress() {
+		$shipPoBox	= $this->focusColumnValues(array('ship_pobox'));
+		$shipCode	= $this->focusColumnValues(array('ship_code'));
+//		$shipCountry	= $this->focusColumnValues(array('ship_country'));
+		$shipState	= $this->focusColumnValues(array('ship_state'));
+		$shipCity	= $this->focusColumnValues(array('ship_city'));
+		$shipStreet	= $this->focusColumnValues(array('ship_street'));
+		$address	= $this->joinValues(array($shipCode, $shipState, $shipCity, $shipStreet), ' ');
+		return $address;
+	}
 }
 ?>
