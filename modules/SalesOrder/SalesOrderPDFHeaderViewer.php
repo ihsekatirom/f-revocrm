@@ -122,7 +122,7 @@
 
 				// Column 3
 				$pdf->SetY($headerFrame->y);
-				$offsetX = 10;
+				$offsetX = 0;
 				$offsetY = 0;
 
 				$modelColumnRight = $modelColumns[2];
