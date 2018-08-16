@@ -141,7 +141,7 @@
 					$pdf->SetFont('kozgopromedium', $fontInpact);
 					$pdf->MultiCell($headerColumnWidth*1.5-$offsetX, 7, $value, 0, 'R', 0, 1, $headerFrame->x+$headerColumnWidth*1.5+$offsetX,
 						$pdf->GetY()+$offsetY);
-					$offsetY = 1;
+//					$offsetY = 1;
 				}
 				$pdf->setFont('kozgopromedium', '');
 

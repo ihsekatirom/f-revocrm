@@ -76,7 +76,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 						'受注No.'       => $this->focusColumnValue('salesorder_no'),
 						'指図No.'       => $this->focusColumnValue('customerno'),
 						'メーカーNo.'   => 2512823,
-						'発注日'	=> $this->focusColumnValue('cf_763'),
+						'受発注日'	=> $this->focusColumnValue('cf_763'),
 						'納品予定日'	=> $this->focusColumnValue('duedate')
 				)
 			);
@@ -95,6 +95,10 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		$customerNameLabel = getTranslatedString('Customer Name', $this->moduleName);
 		$contactNameLabel = getTranslatedString('Contact Name', $this->moduleName);
 		$purchaseOrderLabel = getTranslatedString('Purchase Order', $this->moduleName);
+
+		$modelColumn1 = array(
+				$subjectLabel		=>	$subject,
+		);
 /***
 		$modelColumn1 = array(
 				$subjectLabel		=>	$subject,
