@@ -10,7 +10,7 @@
 include_once 'include/InventoryPDFController.php';
 include_once dirname(__FILE__). '/SalesOrderPDFHeaderViewer.php';
 include_once dirname(__FILE__). '/SalesOrderPDFContentViewer.php';
-//include_once dirname(__FILE__). '/SalesOrderPDFFooterViewer.php';
+include_once dirname(__FILE__). '/SalesOrderPDFFooterViewer.php';
 include_once dirname(__FILE__). '/SalesOrderPDFTaxGroupContentViewer.php';
 
 class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
@@ -224,6 +224,14 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		return $headerViewer;
 	}
 
+	function getFooterViewer() {
+		$footerViewer = new SalesOrderPPDFFooterViewer();
+		$footerViewer->setModel($this->buildFooterModel());
+//		$footerViewer->setLabelModel($this->buildFooterLabelModel());
+//    $footerViewer->setOnEveryPage();
+//		$footerViewer->setOnLastPage();
+		return $footerViewer;
+	}
 //	function buildHeaderModelColumnLeft() {
 //		$modelColumnLeft = parent::buildHeaderModelColumnLeft();
 //		return $modelColumnLeft;
