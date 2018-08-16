@@ -195,7 +195,8 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		global $adb;
 
 		// Contact information
-		$result = $adb->pquery("SELECT * FROM vtiger_contactdetails WHERE contactid = ".$this->focusColumnValue('contact_id'), array());
+		// .$this->focusColumnValue('contact_id')
+		$result = $adb->pquery("SELECT * FROM vtiger_contactdetails WHERE contactid = 17", array());
 		$num_rows = $adb->num_rows($result);
 		if($num_rows) {
 			$resultrow = $adb->fetch_array($result);
