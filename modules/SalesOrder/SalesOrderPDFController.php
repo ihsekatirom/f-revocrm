@@ -9,6 +9,9 @@
  ************************************************************************************/
 include_once 'include/InventoryPDFController.php';
 include_once dirname(__FILE__). '/SalesOrderPDFHeaderViewer.php';
+include_once dirname(__FILE__). '/SalesOrderPDFContentViewer.php';
+//include_once dirname(__FILE__). '/SalesOrderPDFFooterViewer.php';
+include_once dirname(__FILE__). '/SalesOrderPDFTaxGroupContentViewer.php';
 
 class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
@@ -26,6 +29,19 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 					$pdfgenerator->setFooterViewer($this->getFooterViewer());
 
 					$pdfgenerator->generate($filename, $type);
+	}
+
+	function getContentViewer() {
+					if($this->focusColumnValue('hdnTaxType') == "individual") {
+									$contentViewer = new SalesOrderPFContentViewer();
+					} else {
+									$contentViewer = new SalesOrderPDFTaxGroupContentViewer();
+					}
+					$contentViewer->setContentModels($this->buildContentModels());
+					$contentViewer->setSummaryModel($this->buildSummaryModel());
+					$contentViewer->setLabelModel($this->buildContentLabelModel());
+					$contentViewer->setWatermarkModel($this->buildWatermarkModel());
+					return $contentViewer;
 	}
 
 	// Helper methods
