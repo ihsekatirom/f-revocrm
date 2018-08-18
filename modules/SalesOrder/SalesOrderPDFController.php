@@ -400,7 +400,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 //		$DescriptionData[] = $this->focusColumnValue('terms_conditions');
 
 		$footerModel = new Vtiger_PDF_Model();
-		$footerModel->set(SalesOrderPDFFooterViewer::$DESCRIPTION_DATA_KEY, from_html(decode_html($this->joinValues($DescriptionData))));
+//		$footerModel->set(SalesOrderPDFFooterViewer::$DESCRIPTION_DATA_KEY, from_html(decode_html($this->joinValues($DescriptionData))));
 
 //		$footerModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_DATA_KEY, from_html($this->focusColumnValue('description')));
 		$footerModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_DATA_KEY, from_html(decode_html($this->joinValues($DescriptionData))));
@@ -409,7 +409,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
 	function buildFooterLabelModel() {
 		$labelModel = new Vtiger_PDF_Model();
- 		$labelModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_LABEL_KEY, getTranslatedString('Description',$this->moduleName));
+// 		$labelModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_LABEL_KEY, getTranslatedString('Description',$this->moduleName));
 		$labelModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_LABEL_KEY, getTranslatedString('Terms & Conditions',$this->moduleName));
 		return $labelModel;
 	}
