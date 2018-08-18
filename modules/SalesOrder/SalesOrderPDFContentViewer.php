@@ -50,12 +50,9 @@ class SalesOrderPDFContentViewer extends Vtiger_PDF_InventoryContentViewer {
 					$pdf->MultiCell($cellWidth, $this->headerRowHeight, $cellLabel, 1, 'L', 1, 1, $contentFrame->x+$offsetX, $contentFrame->y);
 					$pdf->SetFont('','');
 					$pdf->SetFontSize(6);
-					$offsetX = 35;
-					$pdf->MultiCell($cellWidth-$offsetX, $this->headerRowHeight, $descript, 0, 'L', 0, 0, $contentFrame->x+$offsetX, $contentFrame->y);
-//					$pdf->MultiCell($cellWidth, $this->headerRowHeight/2, $descript, 0, 'L', 0, 0, $contentFrame->x+$offsetX, $contentFrame->y+$this->headerRowHeight/2);
+					$pdf->MultiCell($cellWidth, $this->headerRowHeight/2, $descript, 0, 'L', 0, 0, $contentFrame->x+$offsetX, $contentFrame->y+$this->headerRowHeight/2);
 					$pdf->SetFont('','B');
 					$pdf->SetFontSize(12);
-					$offsetX = 0;
 				}
 			}else {
 				$cellLabel = ($this->labelModel)? $this->labelModel->get($cellName, $cellName) : $cellName;
