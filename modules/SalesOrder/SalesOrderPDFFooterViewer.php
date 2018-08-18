@@ -66,7 +66,7 @@ class SalesOrderPDFFooterViewer extends Vtiger_PDF_InventoryFooterViewer {
 			$pdf->MultiCell($footerFrame->w, $targetFooterHeight - $termsAndConditionHeight, $termsAndCondition,1, 'L', 0, 1,
 		 	 $footerFrame->x, $footerFrame->y);
 ***/
-			$termsAndConditionLabelString = $this->labelModel->get(self::$DESCRIPTION_LABEL_KEY);
+			$termsAndConditionLabelString = $this->labelModel->get(self::$TERMSANDCONDITION_LABEL_KEY);
 			$termsAndCondition = $this->model->get(self::$TERMSANDCONDITION_DATA_KEY);
 			$offsetY = 2.0;
 			$termsAndConditionHeight = $pdf->GetStringHeight($termsAndConditionLabelString, $footerFrame->w);
