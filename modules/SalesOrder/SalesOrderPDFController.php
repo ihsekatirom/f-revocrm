@@ -375,8 +375,8 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
 				$userValues = array();
 
-				if(!empty($resultrow['user_name'])) $userValues[]= $resultrow['user_name'];
-				if(!empty($resultrow['email'])) $userValues[]= '('.$resultrow['email'].')';
+				if(!empty($resultrow['user_name'])) $userValues[] = "\n".$resultrow['user_name'];
+				if(!empty($resultrow['email'])) $userValues[] = '('.$resultrow['email'].')';
 			}
 
 			$modelColumn2 = array(
