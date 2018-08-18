@@ -366,8 +366,9 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 					" ON vtiger_users.id = vtiger_crmentity.smownerid" .
 					" WHERE vtiger_crmentity.deleted = 0 and accountid = ?";
 			$params = array($this->focusColumnValue('account_id'));
-			$result = $adb->pquery($query, array());
-			$num_rows = $adb->num_rows($res);
+			$result = $adb->pquery($query, $params);
+
+			$num_rows = $adb->num_rows($result);
 
 			if($num_rows) {
 				$resultrow = $adb->fetch_array($result);
