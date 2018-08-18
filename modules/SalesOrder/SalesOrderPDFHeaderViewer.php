@@ -99,7 +99,7 @@
 
 				// Rental Info
         foreach($modelColumnLeft['options'] as $label => $value) {
-          if(! empty($value)) {
+          if(! is_array($value)) {
 
             $pdf->SetFont('kozgopromedium', 'B');
             $pdf->SetFillColor(205,201,201);
