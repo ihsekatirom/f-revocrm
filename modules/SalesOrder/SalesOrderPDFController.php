@@ -117,7 +117,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
 	function buildContentLabelModel() {
 		$nameTitle = getTranslatedString('Product Name',$this->moduleName).'・規格';
-		$nameDescription = decode_html('(※文字数や家紋、装飾数が多い場合、紅白の房は追加費用が掛かります)');
+		$nameDescription = decode_html('(※文字数や家紋、装飾数が多い場合、紅白の房は'."\n".'追加費用が掛かります)');
 		$nameLabel = array( $nameTitle => $nameDescription);
 
 		$labelModel = new Vtiger_PDF_Model();
