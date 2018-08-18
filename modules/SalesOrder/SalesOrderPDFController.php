@@ -118,7 +118,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	function buildContentLabelModel() {
 		$labelModel = new Vtiger_PDF_Model();
 		$labelModel->set('Code',      "\n".getTranslatedString('Product Code',$this->moduleName));
-		$labelModel->set('Name',      "\n".getTranslatedString('Product Name',$this->moduleName).'・規格');
+		$labelModel->set('Name',      "\n".getTranslatedString('Product Name',$this->moduleName).'・規格'."/n".'(※文字数や家紋、装飾数が多い場合、紅白の房は追加費用を含みます)');
 		$labelModel->set('Quantity',  "\n".getTranslatedString('Quantity',$this->moduleName));
 //		$labelModel->set('Price',     getTranslatedString('LBL_LIST_PRICE',$this->moduleName));
 		$labelModel->set('Price',     getTranslatedString('LBL_LIST_PRICE',$this->moduleName)."\n(原価)");
