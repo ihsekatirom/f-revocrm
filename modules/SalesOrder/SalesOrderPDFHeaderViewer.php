@@ -97,16 +97,6 @@
           }
         }
 
-				// Rental Info
-//        foreach($modelColumnLeft['options'] as $label => $value) {
-//          if(! is_array($value)) {
-
-            $pdf->SetFont('kozgopromedium', '');
-            $pdf->MultiCell($headerColumnWidth, 7, $label, 1, 'R', 0, 1, $headerFrame->x+$offsetX,
-              $pdf->GetY());
-//          }
-//        }
-
 				// Column 2
 				$offsetX = 5;
 				$offsetY = 0;

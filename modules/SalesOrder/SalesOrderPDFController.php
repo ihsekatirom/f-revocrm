@@ -265,10 +265,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 						'メーカーNo.'		=> 2512823,
 						'受発注日'			=> $this->focusColumnValue('cf_763'),
 						'納品予定日'			=> $this->focusColumnValue('duedate')
-				),
-				'options'	    	=>      array(
-						'見本：'       	=> '見本預かり有り（返却不要）、写真送付有り'
-					)
+				)
 			);
 		return $modelColumn0;
 	}
@@ -361,9 +358,12 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	}
 
 	function buildFooterModel() {
+		$DescriptionData = '見本品預かり有り（返却不要）、見本品写真送付有り';
+		$DescriptionData .= "¥n".$this->focusColumnValue('terms_conditions');
+
 		$footerModel = new Vtiger_PDF_Model();
 //		$footerModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_DATA_KEY, from_html($this->focusColumnValue('description')));
-		$footerModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_DATA_KEY, from_html($this->focusColumnValue('terms_conditions')));
+		$footerModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_DATA_KEY, from_html($DescriptionData));
 		return $footerModel;
 	}
 
