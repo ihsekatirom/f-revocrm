@@ -334,18 +334,14 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 			$resultrow = $adb->fetch_array($result);
 
 			$companyInfo = array();
-
 			if(!empty($resultrow['organizationname'])) $companyInfo[]= $resultrow['organizationname'];
 
-
 			$addressValues = array();
-
 			if(!empty($resultrow['code'])) $addressValues[]= $resultrow['code'];
 //		      if(!empty($resultrow['country'])) $addressValues[]= "\n".$resultrow['country'];
 			if(!empty($resultrow['state'])) $addressValues[]= $resultrow['state'];
 			if(!empty($resultrow['city'])) $addressValues[]= $resultrow['city'];
 			if(!empty($resultrow['address'])) $addressValues[] = $resultrow['address'];
-
 
 			$additionalCompanyInfo = array();
 			if(!empty($resultrow['phone']))	 $additionalCompanyInfo[]= "\n".getTranslatedString("Phone: ", $this->moduleName). $resultrow['phone'];
