@@ -265,7 +265,10 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 						'メーカーNo.'   => 2512823,
 						'受発注日'	=> $this->focusColumnValue('cf_763'),
 						'納品予定日'	=> $this->focusColumnValue('duedate')
-				)
+				),
+				'options'	    =>      array(
+						'見本：'       => '見本預かり有り（返却不要）、写真送付有り'
+					)
 			);
 		return $modelColumn0;
 	}
