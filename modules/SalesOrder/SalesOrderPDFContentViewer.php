@@ -43,13 +43,23 @@ class SalesOrderPDFContentViewer extends Vtiger_PDF_InventoryContentViewer {
 		// Header
 		$offsetX = 0;
 		$pdf->SetFont('','B');
-                $pdf->SetFillColor(205,201,201);
+    $pdf->SetFillColor(205,201,201);
 		foreach($this->cells as $cellName => $cellWidth) {
 			if(! is_array($value)) {
 				$cellLabel = ($this->labelModel)? $this->labelModel->get($cellName, $cellName) : $cellName;
 				$pdf->MultiCell($cellWidth, $this->headerRowHeight, $cellLabel, 1, 'L', 1, 1, $contentFrame->x+$offsetX, $contentFrame->y);
-				$offsetX += $cellWidth;
+			}elseif(is_array($value)) {
+				foreach($value as $title => $descript) {
+					$cellLabel = ($this->labelModel)? $this->labelModel->get($title, $title) : $title;
+					$pdf->MultiCell($cellWidth, $this->headerRowHeight, $title, 1, 'L', 1, 1, $contentFrame->x+$offsetX, $contentFrame->y);
+					$pdf->SetFont('','B');
+					$pdf->SetFontSize(5);
+					$pdf->MultiCell($cellWidth, $this->headerRowHeight, $descript, 0, 'L', 1, 0, $contentFrame->x+$offsetX, $pdf->GetY());
+					$pdf->SetFont('','B');
+					$pdf->SetFontSize();
+				}
 			}
+			$offsetX += $cellWidth;
 		}
 		$pdf->SetFont('','');
 		// Reset the y to use
