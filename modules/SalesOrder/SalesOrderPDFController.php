@@ -364,7 +364,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 					" ON vtiger_groups.groupid = vtiger_crmentity.smownerid" .
 					" LEFT JOIN vtiger_users" .
 					" ON vtiger_users.id = vtiger_crmentity.smownerid" .
-					" WHERE vtiger_crmentity.deleted = 0 and parentid = ?";
+					" WHERE vtiger_crmentity.deleted = 0 and accountid = ?";
 			$params = array($this->focusColumnValue('parent_id'));
 			$result = $adb->pquery($query, array());
 			$num_rows = $adb->num_rows($res);
