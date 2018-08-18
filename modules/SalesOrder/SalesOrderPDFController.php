@@ -118,7 +118,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	function buildContentLabelModel() {
 		$labelModel = new Vtiger_PDF_Model();
 		$labelModel->set('Code',      "\n".getTranslatedString('Product Code',$this->moduleName));
-		$labelModel->set('Name',      "\n".getTranslatedString('Product Name',$this->moduleName).'・規格'."/n".'(※文字数や家紋、装飾数が多い場合、紅白の房は追加費用を含みます)');
+		$labelModel->set('Name',      getTranslatedString('Product Name',$this->moduleName).'・規格'."\n".'(※文字数や家紋、装飾数が多い場合、紅白の房は追加費用を含みます)');
 		$labelModel->set('Quantity',  "\n".getTranslatedString('Quantity',$this->moduleName));
 //		$labelModel->set('Price',     getTranslatedString('LBL_LIST_PRICE',$this->moduleName));
 		$labelModel->set('Price',     getTranslatedString('LBL_LIST_PRICE',$this->moduleName)."\n(原価)");
@@ -359,7 +359,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
 	function buildFooterModel() {
 		$DescriptionData = '見本品預かり有り（返却不要）、見本品写真送付有り';
-		$DescriptionData .= "¥n".$this->focusColumnValue('terms_conditions');
+		$DescriptionData .= "\n".$this->focusColumnValue('terms_conditions');
 
 		$footerModel = new Vtiger_PDF_Model();
 //		$footerModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_DATA_KEY, from_html($this->focusColumnValue('description')));
