@@ -102,7 +102,7 @@
 //          if(! is_array($value)) {
 
             $pdf->SetFont('kozgopromedium', '');
-            $pdf->MultiCell($headerColumnWidth*3, 7, $label, 1, 'R', 0, 1, $headerFrame->x+$offsetX,
+            $pdf->MultiCell($headerColumnWidth, 7, $label, 1, 'R', 0, 1, $headerFrame->x+$offsetX,
               $pdf->GetY());
 //          }
 //        }
