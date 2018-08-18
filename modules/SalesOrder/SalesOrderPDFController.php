@@ -396,9 +396,12 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		if($this->focusColumnValue('cf_767') != 'なし')
 			$DescriptionData[] = '見本品預かり：'.$this->focusColumnValue('cf_767').'数量：'.$this->focusColumnValue('cf_769');
 
-		$DescriptionData[] = $this->focusColumnValue('terms_conditions');
+//		$DescriptionData[] = $this->focusColumnValue('description');
+		$DescriptionData[] = $this->focusColumnValue('terms_condition');
 
 		$footerModel = new Vtiger_PDF_Model();
+//		$footerModel->set(SalesOrderPDFFooterViewer::$DESCRIPTION_DATA_KEY, from_html(decode_html($this->joinValues($DescriptionData))));
+
 //		$footerModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_DATA_KEY, from_html($this->focusColumnValue('description')));
 		$footerModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_DATA_KEY, from_html(decode_html($this->joinValues($DescriptionData))));
 		return $footerModel;
