@@ -421,7 +421,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	}
 
 	function getWatermarkContent() {
-		return $this->focusColumnValue('sostatus');
+//		return $this->focusColumnValue('sostatus');
 	}
 
 	function buildHeaderBillingAddress() {
