@@ -365,7 +365,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 					" LEFT JOIN vtiger_users" .
 					" ON vtiger_users.id = vtiger_crmentity.smownerid" .
 					" WHERE vtiger_crmentity.deleted = 0 and parentid = ?";
-			$params = array($this->focusColumnValue('account_id'));
+			$params = array($this->focusColumnValue('parent_id'));
 			$result = $adb->pquery($query, array());
 			$num_rows = $adb->num_rows($res);
 
@@ -380,7 +380,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
 			$modelColumn2 = array(
 				'print_date' => decode_html($this->joinValues($printInfo)),
-				'summary' => decode_html($resultrow['organizationname']),
+				'summary' => decode_html($this->focusColumnValue('parent_id').$resultrow['organizationname']),
 				'content' => decode_html($this->joinValues($addressValues, ' '). $this->joinValues($additionalCompanyInfo, ' '). $this->joinValues($userValues, ' '))
 				);
 			}
