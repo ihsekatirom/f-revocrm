@@ -45,6 +45,7 @@ class SalesOrderPDFFooterViewer extends Vtiger_PDF_InventoryFooterViewer {
 		if($this->model) {
 			$targetFooterHeight = ($this->onEveryPage())? $footerFrame->h : 0;
 
+			/***
 			$descriptionString = $this->labelModel->get(self::$DESCRIPTION_LABEL_KEY);
 			$description = $this->model->get(self::$DESCRIPTION_DATA_KEY);
 			$descriptionWidth = $pdf->GetStringWidth($descriptionString, $footerFrame->w);
@@ -54,6 +55,7 @@ class SalesOrderPDFFooterViewer extends Vtiger_PDF_InventoryFooterViewer {
 //			$pdf->SetFont('', '');
 			$pdf->MultiCell($footerFrame->w - $descriptionWidth, $targetFooterHeight - $descriptionHeight, $description, 1, 'L', 0, 1,
 				$footerFrame->x + $descriptionWidth, $footerFrame->y);
+				***/
 
 /***
 			$termsAndConditionLabelString = $this->labelModel->get(self::$TERMSANDCONDITION_LABEL_KEY);
