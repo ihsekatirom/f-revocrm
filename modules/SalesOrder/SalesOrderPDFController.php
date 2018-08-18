@@ -403,7 +403,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 //		$footerModel->set(SalesOrderPDFFooterViewer::$DESCRIPTION_DATA_KEY, from_html(decode_html($this->joinValues($DescriptionData))));
 
 //		$footerModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_DATA_KEY, from_html($this->focusColumnValue('description')));
-		$footerModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_DATA_KEY, from_html(decode_html($this->joinValues($DescriptionData))));
+//		$footerModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_DATA_KEY, from_html(decode_html($this->joinValues($DescriptionData))));
 		return $footerModel;
 	}
 
