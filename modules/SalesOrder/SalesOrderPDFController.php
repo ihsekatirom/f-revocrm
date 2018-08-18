@@ -394,7 +394,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	function buildFooterModel() {
 		$DescriptionData = array();
 		if($this->focusColumnValue('cf_767') != 'なし')
-			$DescriptionData[] = '見本品預かり：'.$this->focusColumnValue('cf_767').$this->focusColumnValue('cf_769');
+			$DescriptionData[] = '見本品預かり：'.$this->focusColumnValue('cf_767').'数量：'.$this->focusColumnValue('cf_769');
 
 		$DescriptionData[] = $this->focusColumnValue('terms_conditions');
 
