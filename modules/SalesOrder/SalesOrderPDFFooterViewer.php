@@ -45,17 +45,16 @@ class SalesOrderPDFFooterViewer extends Vtiger_PDF_InventoryFooterViewer {
 		if($this->model) {
 			$targetFooterHeight = ($this->onEveryPage())? $footerFrame->h : 0;
 
-			/***
 			$descriptionString = $this->labelModel->get(self::$DESCRIPTION_LABEL_KEY);
 			$description = $this->model->get(self::$DESCRIPTION_DATA_KEY);
-			$descriptionWidth = $pdf->GetStringWidth($descriptionString, $footerFrame->w);
+//			$descriptionWidth = $pdf->GetStringWidth($descriptionString);
+			$descriptionWidth = 100;
 			$pdf->SetFillColor(205,201,201);
 //			$pdf->SetFont('', 'B');
 			$pdf->MultiCell($descriptionWidth, $descriptionHeight, $descriptionString, 1, 'L', 1, 1, $footerFrame->x, $footerFrame->y);
 //			$pdf->SetFont('', '');
 			$pdf->MultiCell($footerFrame->w - $descriptionWidth, $targetFooterHeight - $descriptionHeight, $description, 1, 'L', 0, 1,
 				$footerFrame->x + $descriptionWidth, $footerFrame->y);
-				***/
 
 /***
 			$termsAndConditionLabelString = $this->labelModel->get(self::$TERMSANDCONDITION_LABEL_KEY);
@@ -68,15 +67,6 @@ class SalesOrderPDFFooterViewer extends Vtiger_PDF_InventoryFooterViewer {
 			$pdf->MultiCell($footerFrame->w, $targetFooterHeight - $termsAndConditionHeight, $termsAndCondition,1, 'L', 0, 1,
 		 	 $footerFrame->x, $footerFrame->y);
 ***/
-			$termsAndConditionLabelString = $this->labelModel->get(self::$DESCRIPTION_LABEL_KEY);
-			$termsAndCondition = $this->model->get(self::$DESCRIPTION_DATA_KEY);
-			$offsetY = 2.0;
-			$termsAndConditionHeight = $pdf->GetStringHeight($termsAndConditionLabelString, $footerFrame->w);
-			$pdf->SetFillColor(205,201,201);
-			//			$pdf->MultiCell($footerFrame->w, $termsAndConditionHeight, $termsAndConditionLabelString, 1, 'L', 1, 1,
-			//				$footerFrame->x, $footerFrame->y);
-			$pdf->MultiCell($footerFrame->w, $targetFooterHeight - $termsAndConditionHeight, $termsAndCondition,1, 'L', 0, 1,
-			 $footerFrame->x, $footerFrame->y);
 		}
 	}
 }
