@@ -380,7 +380,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
 			$modelColumn2 = array(
 				'print_date' => decode_html($this->joinValues($printInfo)),
-				'summary' => decode_html($this->focusColumnValue('account_id').$resultrow['organizationname']),
+				'summary' => decode_html($resultrow['organizationname']),
 				'content' => decode_html($this->joinValues($addressValues, ' '). $this->joinValues($additionalCompanyInfo, ' '). $this->joinValues($userValues, ' '))
 				);
 			}
