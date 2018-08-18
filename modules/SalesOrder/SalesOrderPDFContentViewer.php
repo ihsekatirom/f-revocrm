@@ -49,7 +49,7 @@ class SalesOrderPDFContentViewer extends Vtiger_PDF_InventoryContentViewer {
 				foreach($this->labelModel->get($cellName) as $cellLabel => $descript) {
 					$pdf->MultiCell($cellWidth, $this->headerRowHeight, $cellLabel, 1, 'L', 1, 1, $contentFrame->x+$offsetX, $contentFrame->y);
 					$pdf->SetFont('','');
-					$pdf->SetFontSize(8);
+					$pdf->SetFontSize(6);
 					$pdf->MultiCell($cellWidth, $this->headerRowHeight/2, $descript, 0, 'L', 0, 0, $contentFrame->x+$offsetX, $contentFrame->y+$this->headerRowHeight/2);
 					$pdf->SetFont('','B');
 					$pdf->SetFontSize(12);
