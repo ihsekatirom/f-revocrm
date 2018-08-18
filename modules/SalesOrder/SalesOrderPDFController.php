@@ -320,8 +320,11 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		global $adb;
 
 		// Print Infomation
+		$issueDateLabel = getTranslatedString('Issued Date', $this->moduleName);
+		$validDateLabel = getTranslatedString('Due Date', $this->moduleName);
+//					      $validDateLabel => $this->formatDate($this->focusColumnValue('duedate')),
 		$printInfo = array();
-		if(!empty($resultrow['phone']))	 $printInfo[]= $issueDateLabel.'：'. $this->formatDate(date("Y-m-d"));
+		$printInfo[]= $issueDateLabel.'：'. $this->formatDate(date("Y-m-d"));
 		if(!empty($this->focusColumnValue('salesorder_no'))) $printInfo[]= '販売受注番号：'. $this->focusColumnValue('salesorder_no');
 
 		// Company information
@@ -329,6 +332,11 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		$num_rows = $adb->num_rows($result);
 		if($num_rows) {
 			$resultrow = $adb->fetch_array($result);
+
+			$companyInfo = array();
+
+			if(!empty($resultrow['organizationname'])) $companyInfo[]= $resultrow['organizationname'];
+
 
 			$addressValues = array();
 
@@ -344,47 +352,42 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 			if(!empty($resultrow['fax']))	   $additionalCompanyInfo[]= "\n".getTranslatedString("Fax: ", $this->moduleName). $resultrow['fax'];
 //			if(!empty($resultrow['website']))       $additionalCompanyInfo[]= "\n".getTranslatedString("Website: ", $this->moduleName). $resultrow['website'];
 //			if(!empty($resultrow['vatid']))	 $additionalCompanyInfo[]= "\n".getTranslatedString("VAT ID: ", $this->moduleName). $resultrow['vatid'];
+		}
 
-			$issueDateLabel = getTranslatedString('Issued Date', $this->moduleName);
-			$validDateLabel = getTranslatedString('Due Date', $this->moduleName);
+		// User information
+		$userNameSql = getSqlForNameInDisplayFormat(array('first_name'=>
+			'vtiger_users.first_name', 'last_name' => 'vtiger_users.last_name'), 'Users');
+		$query = "SELECT vtiger_users.email1 as email ," .
+				" CASE when (vtiger_users.user_name not like '') THEN $userNameSql ELSE vtiger_groups.groupname END as user_name " .
+				" FROM vtiger_account" .
+				" INNER JOIN vtiger_crmentity " .
+				" ON vtiger_crmentity.crmid = vtiger_account.accountid" .
+				" INNER JOIN vtiger_accountbillads" .
+				" ON vtiger_account.accountid = vtiger_accountbillads.accountaddressid " .
+				" LEFT JOIN vtiger_groups" .
+				" ON vtiger_groups.groupid = vtiger_crmentity.smownerid" .
+				" LEFT JOIN vtiger_users" .
+				" ON vtiger_users.id = vtiger_crmentity.smownerid" .
+				" WHERE vtiger_crmentity.deleted = 0 and accountid = ?";
+		$params = array($this->focusColumnValue('account_id'));
+		$result = $adb->pquery($query, $params);
+		$num_rows = $adb->num_rows($result);
 
-//					      $validDateLabel => $this->formatDate($this->focusColumnValue('duedate')),
+		if($num_rows) {
+			$resultrow = $adb->fetch_array($result);
 
-			// User information
- 			$userNameSql = getSqlForNameInDisplayFormat(array('first_name'=>
-					'vtiger_users.first_name', 'last_name' => 'vtiger_users.last_name'), 'Users');
-			$query = "SELECT vtiger_users.email1 as email ," .
-					" CASE when (vtiger_users.user_name not like '') THEN $userNameSql ELSE vtiger_groups.groupname END as user_name " .
-					" FROM vtiger_account" .
-					" INNER JOIN vtiger_crmentity " .
-					" ON vtiger_crmentity.crmid = vtiger_account.accountid" .
-					" INNER JOIN vtiger_accountbillads" .
-					" ON vtiger_account.accountid = vtiger_accountbillads.accountaddressid " .
-					" LEFT JOIN vtiger_groups" .
-					" ON vtiger_groups.groupid = vtiger_crmentity.smownerid" .
-					" LEFT JOIN vtiger_users" .
-					" ON vtiger_users.id = vtiger_crmentity.smownerid" .
-					" WHERE vtiger_crmentity.deleted = 0 and accountid = ?";
-			$params = array($this->focusColumnValue('account_id'));
-			$result = $adb->pquery($query, $params);
+			$userValues = array();
 
-			$num_rows = $adb->num_rows($result);
+			if(!empty($resultrow['user_name'])) $userValues[] = "\n".$resultrow['user_name'];
+			if(!empty($resultrow['email'])) $userValues[] = '('.$resultrow['email'].')';
+		}
 
-			if($num_rows) {
-				$resultrow = $adb->fetch_array($result);
+		$modelColumn2 = array(
+			'print_date' => decode_html($this->joinValues($printInfo)),
+			'summary' => decode_html($this->joinValues($companyInfo)),
+			'content' => decode_html($this->joinValues($addressValues, ' '). $this->joinValues($additionalCompanyInfo, ' '). $this->joinValues($userValues, ' '))
+			);
 
-				$userValues = array();
-
-				if(!empty($resultrow['user_name'])) $userValues[] = "\n".$resultrow['user_name'];
-				if(!empty($resultrow['email'])) $userValues[] = '('.$resultrow['email'].')';
-			}
-
-			$modelColumn2 = array(
-				'print_date' => decode_html($this->joinValues($printInfo)),
-				'summary' => decode_html($resultrow['organizationname']),
-				'content' => decode_html($this->joinValues($addressValues, ' '). $this->joinValues($additionalCompanyInfo, ' '). $this->joinValues($userValues, ' '))
-				);
-			}
 		return $modelColumn2;
 	}
 
