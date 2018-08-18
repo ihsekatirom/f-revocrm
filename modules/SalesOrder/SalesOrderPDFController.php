@@ -409,7 +409,7 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 
 	function buildFooterLabelModel() {
 		$labelModel = new Vtiger_PDF_Model();
-//		$labelModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_LABEL_KEY, getTranslatedString('Description',$this->moduleName));
+// 		$labelModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_LABEL_KEY, getTranslatedString('Description',$this->moduleName));
 		$labelModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_LABEL_KEY, getTranslatedString('Terms & Conditions',$this->moduleName));
 		return $labelModel;
 	}
