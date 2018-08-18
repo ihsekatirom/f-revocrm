@@ -319,6 +319,11 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 	function buildHeaderModelColumnRight() {
 		global $adb;
 
+		// Print Infomation
+		$printInfo = array();
+		if(!empty($resultrow['phone']))	 $printInfo[]= $issueDateLabel.'：'. $this->formatDate(date("Y-m-d"));
+		if(!empty($this->focusColumnValue('salesorder_no'))) $printInfo[]= '販売受注番号：'. $this->focusColumnValue('salesorder_no');
+
 		// Company information
 		$result = $adb->pquery("SELECT * FROM vtiger_organizationdetails", array());
 		$num_rows = $adb->num_rows($result);
@@ -344,14 +349,39 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 			$validDateLabel = getTranslatedString('Due Date', $this->moduleName);
 
 //					      $validDateLabel => $this->formatDate($this->focusColumnValue('duedate')),
-			$printInfo = array();
-			if(!empty($resultrow['phone']))	 $printInfo[]= $issueDateLabel.'：'. $this->formatDate(date("Y-m-d"));
-			if(!empty($this->focusColumnValue('salesorder_no'))) $printInfo[]= '販売受注番号：'. $this->focusColumnValue('salesorder_no');
+
+			// User information
+ 			$userNameSql = getSqlForNameInDisplayFormat(array('first_name'=>
+					'vtiger_users.first_name', 'last_name' => 'vtiger_users.last_name'), 'Users');
+			$query = "SELECT vtiger_users.email1 as email ," .
+					" CASE when (vtiger_users.user_name not like '') THEN $userNameSql ELSE vtiger_groups.groupname END as user_name " .
+					" FROM vtiger_account" .
+					" INNER JOIN vtiger_crmentity " .
+					" ON vtiger_crmentity.crmid = vtiger_account.accountid" .
+					" INNER JOIN vtiger_accountbillads" .
+					" ON vtiger_account.accountid = vtiger_accountbillads.accountaddressid " .
+					" LEFT JOIN vtiger_groups" .
+					" ON vtiger_groups.groupid = vtiger_crmentity.smownerid" .
+					" LEFT JOIN vtiger_users" .
+					" ON vtiger_users.id = vtiger_crmentity.smownerid" .
+					" WHERE vtiger_crmentity.deleted = 0 and parentid = ?";
+			$params = array($this->focusColumnValue('account_id'));
+			$result = $adb->pquery($query, array());
+			$num_rows = $adb->num_rows($res);
+
+			if($num_rows) {
+				$resultrow = $adb->fetch_array($result);
+
+				$userValues = array();
+
+				if(!empty($resultrow['user_name'])) $userValues[]= $resultrow['user_name'];
+				if(!empty($resultrow['email'])) $userValues[]= '('.$resultrow['email'].')';
+			}
 
 			$modelColumn2 = array(
 				'print_date' => decode_html($this->joinValues($printInfo)),
 				'summary' => decode_html($resultrow['organizationname']),
-				'content' => decode_html($this->joinValues($addressValues, ' '). $this->joinValues($additionalCompanyInfo, ' '))
+				'content' => decode_html($this->joinValues($addressValues, ' '). $this->joinValues($additionalCompanyInfo, ' '). $this->joinValues($userValues, ' '))
 				);
 			}
 		return $modelColumn2;
