@@ -44,6 +44,16 @@ class SalesOrderPDFFooterViewer extends Vtiger_PDF_InventoryFooterViewer {
 
 		if($this->model) {
 			$targetFooterHeight = ($this->onEveryPage())? $footerFrame->h : 0;
+
+			$descriptionString = $this->labelModel->get(self::$DESCRIPTION_LABEL_KEY);
+			$description = $this->model->get(self::$DESCRIPTION_DATA_KEY);
+//			$descriptionHeight = $pdf->GetStringHeight($descriptionString, $footerFrame->w);
+			$descriptionWidth = $pdf->GetStringWidth($descriptionString, $footerFrame->w);
+			$pdf->SetFillColor(205,201,201);
+			$pdf->MultiCell($descriptionWidth, $descriptionHeight, $descriptionString, 1, 'L', 1, 1, $footerFrame->x, $footerFrame->y);
+			$pdf->MultiCell($footerFrame->w - $descriptionWidth, $targetFooterHeight - $descriptionHeight, $description, 1, 'L',
+				0, 1, $footerFrame->x + $descriptionWidth, $footerFrame->y);
+/***
 			$termsAndConditionLabelString = $this->labelModel->get(self::$TERMSANDCONDITION_LABEL_KEY);
 			$termsAndCondition = $this->model->get(self::$TERMSANDCONDITION_DATA_KEY);
 			$offsetY = 2.0;
@@ -53,6 +63,7 @@ class SalesOrderPDFFooterViewer extends Vtiger_PDF_InventoryFooterViewer {
 //				$footerFrame->x, $footerFrame->y);
 			$pdf->MultiCell($footerFrame->w, $targetFooterHeight - $termsAndConditionHeight, $termsAndCondition,1, 'L', 0, 1,
 		 	 $footerFrame->x, $footerFrame->y);
+***/
 		}
 	}
 }

@@ -396,18 +396,19 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		if($this->focusColumnValue('cf_767') != 'なし')
 			$DescriptionData[] = '見本品預かり：'.$this->focusColumnValue('cf_767').'数量：'.$this->focusColumnValue('cf_769');
 
-		$DescriptionData[] = $this->focusColumnValue('terms_conditions');
+		$DescriptionData[] = $this->focusColumnValue('description');
 
 		$footerModel = new Vtiger_PDF_Model();
+		$footerModel->set(SalesOrderPDFFooterViewer::$DESCRIPTION_DATA_KEY, from_html(decode_html($this->joinValues($DescriptionData))));
 //		$footerModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_DATA_KEY, from_html($this->focusColumnValue('description')));
-		$footerModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_DATA_KEY, from_html(decode_html($this->joinValues($DescriptionData))));
+//		$footerModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_DATA_KEY, from_html(decode_html($this->joinValues($DescriptionData))));
 		return $footerModel;
 	}
 
 	function buildFooterLabelModel() {
 		$labelModel = new Vtiger_PDF_Model();
-//		$labelModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_LABEL_KEY, getTranslatedString('Description',$this->moduleName));
-		$labelModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_LABEL_KEY, getTranslatedString('Terms & Conditions',$this->moduleName));
+		$labelModel->set(Vtiger_PDF_InventoryFooterViewer::$DESCRIPTION_LABEL_KEY, getTranslatedString('Description',$this->moduleName));
+//		$labelModel->set(SalesOrderPDFFooterViewer::$TERMSANDCONDITION_LABEL_KEY, getTranslatedString('Terms & Conditions',$this->moduleName));
 		return $labelModel;
 	}
 
