@@ -48,7 +48,8 @@ class SalesOrderPDFContentViewer extends Vtiger_PDF_InventoryContentViewer {
 			if(! is_array($value)) {
 				$cellLabel = ($this->labelModel)? $this->labelModel->get($cellName, $cellName) : $cellName;
 				$pdf->MultiCell($cellWidth, $this->headerRowHeight, $cellLabel, 1, 'L', 1, 1, $contentFrame->x+$offsetX, $contentFrame->y);
-			}elseif(is_array($value)) {
+//			}elseif(is_array($value)) {
+			}else {
 				foreach($value as $title => $descript) {
 					$cellLabel = ($this->labelModel)? $this->labelModel->get($title, $title) : $title;
 					$pdf->MultiCell($cellWidth, $this->headerRowHeight, $title, 1, 'L', 1, 1, $contentFrame->x+$offsetX, $contentFrame->y);
