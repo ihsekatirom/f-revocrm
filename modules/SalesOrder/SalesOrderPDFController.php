@@ -256,18 +256,18 @@ class Vtiger_SalesOrderPDFController extends Vtiger_InventoryPDFController{
 		$modelColumn0 = array(
 				'customer'			=>      $CustomerInfo,
 				'contact'	      =>      $additionalContactInfo,
-				'summary'	    =>      array(
-						'件名'       => $this->focusColumnValue('subject')
+				'summary'		    =>      array(
+						'件名'					=> $this->focusColumnValue('subject')
 					),
-				'fieldvalue'	    =>      array(
-						'受注No.'       => $this->focusColumnValue('salesorder_no'),
-						'指図No.'       => $this->focusColumnValue('customerno'),
-						'メーカーNo.'   => 2512823,
-						'受発注日'	=> $this->focusColumnValue('cf_763'),
-						'納品予定日'	=> $this->focusColumnValue('duedate')
+				'fieldvalue'		=>      array(
+						'受注No.'				=> $this->focusColumnValue('salesorder_no'),
+						'指図No.'				=> $this->focusColumnValue('customerno'),
+						'メーカーNo.'		=> 2512823,
+						'受発注日'			=> $this->focusColumnValue('cf_763'),
+						'納品予定日'			=> $this->focusColumnValue('duedate')
 				),
-				'options'	    =>      array(
-						'見本：'       => '見本預かり有り（返却不要）、写真送付有り'
+				'options'	    	=>      array(
+						'見本：'       	=> '見本預かり有り（返却不要）、写真送付有り'
 					)
 			);
 		return $modelColumn0;
