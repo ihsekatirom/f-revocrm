@@ -47,13 +47,12 @@ class SalesOrderPDFFooterViewer extends Vtiger_PDF_InventoryFooterViewer {
 
 			$descriptionString = $this->labelModel->get(self::$DESCRIPTION_LABEL_KEY);
 			$description = $this->model->get(self::$DESCRIPTION_DATA_KEY);
-//			$descriptionWidth = $pdf->GetStringWidth($descriptionString);
-			$descriptionWidth = 100;
+			$descriptionWidth = $pdf->GetStringWidth($descriptionString);
 			$pdf->SetFillColor(205,201,201);
 //			$pdf->SetFont('', 'B');
-			$pdf->MultiCell($descriptionWidth, $descriptionHeight, $descriptionString, 1, 'L', 1, 1, $footerFrame->x, $footerFrame->y);
+			$pdf->MultiCell($descriptionWidth, $targetFooterHeight, $descriptionString, 1, 'L', 1, 1, $footerFrame->x, $footerFrame->y);
 //			$pdf->SetFont('', '');
-			$pdf->MultiCell($footerFrame->w - $descriptionWidth, $targetFooterHeight - $descriptionHeight, $description, 1, 'L', 0, 1,
+			$pdf->MultiCell($footerFrame->w - $descriptionWidth, $targetFooterHeight, $description, 1, 'L', 0, 1,
 				$footerFrame->x + $descriptionWidth, $footerFrame->y);
 
 /***
