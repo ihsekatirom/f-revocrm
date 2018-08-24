@@ -9,14 +9,14 @@
  ************************************************************************************/
 /* Performance paramters can be configured to fine tune vtiger CRM runtime */
 $PERFORMANCE_CONFIG = Array(
-	// Enable log4php debugging only if requried 
-	'LOG4PHP_DEBUG' => false,
+	// Enable log4php debugging only if requried
+	'LOG4PHP_DEBUG' => true,
 
 	// Should the caller information be captured in SQL Logging?
 	// It adds little overhead for performance but will be useful to debug
 	'SQL_LOG_INCLUDE_CALLER' => false,
 
-	// If database default charset is UTF-8, set this to true 
+	// If database default charset is UTF-8, set this to true
 	// This avoids executing the SET NAMES SQL for each query!
 	'DB_DEFAULT_CHARSET_UTF8' => true,
 
@@ -25,7 +25,7 @@ $PERFORMANCE_CONFIG = Array(
 
 	// Turn-off default sorting in ListView, could eat up time as data grows
 	'LISTVIEW_DEFAULT_SORTING' => false,
-	
+
 	// Compute list view record count while loading listview everytime.
 	// Recommended value false
 	'LISTVIEW_COMPUTE_PAGE_COUNT' => false,
